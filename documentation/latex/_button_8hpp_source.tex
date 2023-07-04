@@ -1,0 +1,78 @@
+\doxysection{Button.\+hpp}
+\hypertarget{_button_8hpp_source}{}\label{_button_8hpp_source}\index{D:/development/esp/projects/idf\_4\_0/data\_control/components/button\_controller/Button.hpp@{D:/development/esp/projects/idf\_4\_0/data\_control/components/button\_controller/Button.hpp}}
+\mbox{\hyperlink{_button_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}../data\_control/DataControl.hpp"{}}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{comment}{//esp-\/idf\ includes}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}driver/gpio.h"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}freertos/FreeRTOS.h"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}freertos/queue.h"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}freertos/task.h"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}esp\_log.h"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}esp\_err.h"{}}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{comment}{//standard\ library\ includes}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00033\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_button}{Button}}\ \{\ \ \ \ \ \ \ }
+\DoxyCodeLine{00034\ \ \ \textcolor{keyword}{public}:\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{class_button_a8116e8c26b547c2801572f7b45aceea8}{ButtonEvent}}\ }
+\DoxyCodeLine{00040\ \ \ \ \ \{}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \mbox{\hyperlink{class_button_a8116e8c26b547c2801572f7b45aceea8aead9be15f56a79815ce4b75f6ada4954}{quick\_press}},\ }
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \mbox{\hyperlink{class_button_a8116e8c26b547c2801572f7b45aceea8a4c733dc96efea4f817573c76f22afefd}{long\_press}},\ }
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \mbox{\hyperlink{class_button_a8116e8c26b547c2801572f7b45aceea8a0eb29f5d6149e84750bcd6f6e741a7a1}{held}},\ }
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \mbox{\hyperlink{class_button_a8116e8c26b547c2801572f7b45aceea8a23690fd759f17135ec9879b56ff2600c}{released}}\ }
+\DoxyCodeLine{00045\ \ \ \ \ \};}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_button_1_1button__config__t}{button\_config\_t}}\{}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ gpio\_num\_t\ \mbox{\hyperlink{struct_button_1_1button__config__t_a2ebaf46b191200ea3592583458ca55aa}{gpio\_num}};\ }
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_button_1_1button__config__t_a2aa34145638fc1b06114049df51c6856}{active\_lo}};\ }
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_button_1_1button__config__t_abef78ddd69435d1f26d68a35339ac5cc}{active\_hi}};\ }
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_button_1_1button__config__t_a7ce7d7d90124d2316b89cd1d796dbb31}{pull\_en}};\ }
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ int64\_t\ \mbox{\hyperlink{struct_button_1_1button__config__t_ae8f9eaa509e284fd381a1d8acd259407}{long\_press\_evt\_time}};\ }
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ int64\_t\ \mbox{\hyperlink{struct_button_1_1button__config__t_a323384aa42fac17b4be81bc260dcf0e7}{held\_evt\_time}};\ }
+\DoxyCodeLine{00056\ \ \ \ \ \};\ }
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00081\ \ \ \ \ \mbox{\hyperlink{class_button}{Button}}(\mbox{\hyperlink{struct_button_1_1button__config__t}{button\_config\_t}}\ \mbox{\hyperlink{class_button_a3b973cad54cbb17738dc442a2242935e}{button\_conf}},\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_button_a6277c0ef74f409a3a5a1af0b0ffaca7c}{logging\_en}}\ =\ \textcolor{keyword}{false},\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{class_button_a7f62bfcedac3168177a12db8483e3e3a}{name}}\ =\ \textcolor{stringliteral}{"{}unamed"{}});}
+\DoxyCodeLine{00082\ \ \ }
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_button_a713b68291767522afcc497527010583f}{scan}}();\ }
+\DoxyCodeLine{00100\ \ \ \ \ }
+\DoxyCodeLine{00101\ \ \ \ \ DataControl::CallAlways<ButtonEvent>\ \mbox{\hyperlink{class_button_a77c3cd3d62682c2ae22f43cb301329d3}{event}};\ }
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00103\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00104\ \ \ }
+\DoxyCodeLine{00105\ \ \ \ \ \mbox{\hyperlink{struct_button_1_1button__config__t}{button\_config\_t}}\ \mbox{\hyperlink{class_button_a3b973cad54cbb17738dc442a2242935e}{button\_conf}};\ }
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_button_a0a42e1a4f8a5dc2fd1ef15a07794e089}{initialized}};\ }
+\DoxyCodeLine{00107\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_button_a6277c0ef74f409a3a5a1af0b0ffaca7c}{logging\_en}};\ }
+\DoxyCodeLine{00108\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_button_a0bb59aba9e0eddec6231e44a825578f2}{pending\_scan}};\ \ }
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{class_button_a7f62bfcedac3168177a12db8483e3e3a}{name}};\ }
+\DoxyCodeLine{00110\ \ \ }
+\DoxyCodeLine{00119\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_button_ade129e1730281d6cc1cfd11482f1f2b5}{get\_button\_level}}(\mbox{\hyperlink{class_button}{Button}}\ *button);\ }
+\DoxyCodeLine{00120\ \ \ }
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_button_a451d7f1583821f17ccde59af929a653a}{generate\_quick\_press\_evt}}(\mbox{\hyperlink{class_button}{Button}}\ *button);}
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00141\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_button_a29db4073f4f18d62501bd76b32e395aa}{generate\_long\_press\_evt}}(\mbox{\hyperlink{class_button}{Button}}\ *button);}
+\DoxyCodeLine{00142\ }
+\DoxyCodeLine{00152\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_button_a0be21e75edf5a35269a08a57525dca97}{generate\_held\_evt}}(\mbox{\hyperlink{class_button}{Button}}\ *button);}
+\DoxyCodeLine{00153\ }
+\DoxyCodeLine{00163\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_button_aa776a3a23c461bd31b6335e55b454b66}{generate\_released\_evt}}(\mbox{\hyperlink{class_button}{Button}}\ *button);}
+\DoxyCodeLine{00164\ \ \ \ }
+\DoxyCodeLine{00174\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_button_aee4cfc29bbcb81ad3ce9550e5ea577ba}{press\_check}}(\mbox{\hyperlink{class_button}{Button}}\ *button);}
+\DoxyCodeLine{00175\ \ \ }
+\DoxyCodeLine{00185\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_button_a5c22d473a713f659826475a966f2ed94}{released\_check}}(\mbox{\hyperlink{class_button}{Button}}\ *button);}
+\DoxyCodeLine{00186\ \ \ }
+\DoxyCodeLine{00200\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_button_aa819877f2005d6aa6cc0614dcea49e47}{button\_task}}(\textcolor{keywordtype}{void}\ *button);}
+\DoxyCodeLine{00201\ }
+\DoxyCodeLine{00215\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ IRAM\_ATTR\ \mbox{\hyperlink{class_button_a380a98af49d16f41dd9c8ba70ed03e23}{button\_handler}}(\textcolor{keywordtype}{void}\ *arg);}
+\DoxyCodeLine{00216\ \ \ \ \ xTaskHandle\ \mbox{\hyperlink{class_button_a95538e961b9beaae917761c4e84830ab}{button\_task\_hdl}};\ }
+\DoxyCodeLine{00217\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{class_button_a2d65daf4266db3718f2ea475315f0451}{TAG}}\ =\ \textcolor{stringliteral}{"{}Button"{}};\ }
+\DoxyCodeLine{00218\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_button_ac7a7ea213cdfc221d42d457d89e44906}{isr\_service\_installed}};\ }
+\DoxyCodeLine{00219\ \ }
+\DoxyCodeLine{00220\ \ \ \ }
+\DoxyCodeLine{00221\ \};}
+
+\end{DoxyCode}

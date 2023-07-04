@@ -1,0 +1,82 @@
+\doxysection{Button\+::button\+\_\+config\+\_\+t Struct Reference}
+\hypertarget{struct_button_1_1button__config__t}{}\label{struct_button_1_1button__config__t}\index{Button::button\_config\_t@{Button::button\_config\_t}}
+
+
+{\ttfamily \#include $<$Button.\+hpp$>$}
+
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+gpio\+\_\+num\+\_\+t \mbox{\hyperlink{struct_button_1_1button__config__t_a2ebaf46b191200ea3592583458ca55aa}{gpio\+\_\+num}}
+\begin{DoxyCompactList}\small\item\em the gpio number associated with the button \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{struct_button_1_1button__config__t_a2aa34145638fc1b06114049df51c6856}{active\+\_\+lo}}
+\begin{DoxyCompactList}\small\item\em true if the button is active-\/low (falling edge), false if otherwise \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{struct_button_1_1button__config__t_abef78ddd69435d1f26d68a35339ac5cc}{active\+\_\+hi}}
+\begin{DoxyCompactList}\small\item\em true if the button is active-\/high (rising edge), false if otherwise \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{struct_button_1_1button__config__t_a7ce7d7d90124d2316b89cd1d796dbb31}{pull\+\_\+en}}
+\begin{DoxyCompactList}\small\item\em true if internal pullup (for active low) or pulldown (for active high) should be enabled, false if using external pullup/pulldown \end{DoxyCompactList}\item 
+int64\+\_\+t \mbox{\hyperlink{struct_button_1_1button__config__t_ae8f9eaa509e284fd381a1d8acd259407}{long\+\_\+press\+\_\+evt\+\_\+time}}
+\item 
+int64\+\_\+t \mbox{\hyperlink{struct_button_1_1button__config__t_a323384aa42fac17b4be81bc260dcf0e7}{held\+\_\+evt\+\_\+time}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{struct_button_1_1button__config__t_abef78ddd69435d1f26d68a35339ac5cc}\label{struct_button_1_1button__config__t_abef78ddd69435d1f26d68a35339ac5cc} 
+\index{Button::button\_config\_t@{Button::button\_config\_t}!active\_hi@{active\_hi}}
+\index{active\_hi@{active\_hi}!Button::button\_config\_t@{Button::button\_config\_t}}
+\doxysubsubsection{\texorpdfstring{active\_hi}{active\_hi}}
+{\footnotesize\ttfamily bool Button\+::button\+\_\+config\+\_\+t\+::active\+\_\+hi}
+
+
+
+true if the button is active-\/high (rising edge), false if otherwise 
+
+\Hypertarget{struct_button_1_1button__config__t_a2aa34145638fc1b06114049df51c6856}\label{struct_button_1_1button__config__t_a2aa34145638fc1b06114049df51c6856} 
+\index{Button::button\_config\_t@{Button::button\_config\_t}!active\_lo@{active\_lo}}
+\index{active\_lo@{active\_lo}!Button::button\_config\_t@{Button::button\_config\_t}}
+\doxysubsubsection{\texorpdfstring{active\_lo}{active\_lo}}
+{\footnotesize\ttfamily bool Button\+::button\+\_\+config\+\_\+t\+::active\+\_\+lo}
+
+
+
+true if the button is active-\/low (falling edge), false if otherwise 
+
+\Hypertarget{struct_button_1_1button__config__t_a2ebaf46b191200ea3592583458ca55aa}\label{struct_button_1_1button__config__t_a2ebaf46b191200ea3592583458ca55aa} 
+\index{Button::button\_config\_t@{Button::button\_config\_t}!gpio\_num@{gpio\_num}}
+\index{gpio\_num@{gpio\_num}!Button::button\_config\_t@{Button::button\_config\_t}}
+\doxysubsubsection{\texorpdfstring{gpio\_num}{gpio\_num}}
+{\footnotesize\ttfamily gpio\+\_\+num\+\_\+t Button\+::button\+\_\+config\+\_\+t\+::gpio\+\_\+num}
+
+
+
+the gpio number associated with the button 
+
+\Hypertarget{struct_button_1_1button__config__t_a323384aa42fac17b4be81bc260dcf0e7}\label{struct_button_1_1button__config__t_a323384aa42fac17b4be81bc260dcf0e7} 
+\index{Button::button\_config\_t@{Button::button\_config\_t}!held\_evt\_time@{held\_evt\_time}}
+\index{held\_evt\_time@{held\_evt\_time}!Button::button\_config\_t@{Button::button\_config\_t}}
+\doxysubsubsection{\texorpdfstring{held\_evt\_time}{held\_evt\_time}}
+{\footnotesize\ttfamily int64\+\_\+t Button\+::button\+\_\+config\+\_\+t\+::held\+\_\+evt\+\_\+time}
+
+held event generation time in microseconds (us), if the button is held for longer than (25ms+long\+\_\+press\+\_\+evt\+\_\+time+hold\+\_\+evt\+\_\+time), ~\newline
+ held events will be generated every held\+\_\+evt\+\_\+time us \Hypertarget{struct_button_1_1button__config__t_ae8f9eaa509e284fd381a1d8acd259407}\label{struct_button_1_1button__config__t_ae8f9eaa509e284fd381a1d8acd259407} 
+\index{Button::button\_config\_t@{Button::button\_config\_t}!long\_press\_evt\_time@{long\_press\_evt\_time}}
+\index{long\_press\_evt\_time@{long\_press\_evt\_time}!Button::button\_config\_t@{Button::button\_config\_t}}
+\doxysubsubsection{\texorpdfstring{long\_press\_evt\_time}{long\_press\_evt\_time}}
+{\footnotesize\ttfamily int64\+\_\+t Button\+::button\+\_\+config\+\_\+t\+::long\+\_\+press\+\_\+evt\+\_\+time}
+
+long-\/press event generation time in microseconds (us), if the button is held for longer than (long\+\_\+press\+\_\+evt\+\_\+time+25ms) a long-\/press event is generated, if it is released before (long\+\_\+press\+\_\+evt\+\_\+time+25ms) elapses a quick-\/press event is generated instead \Hypertarget{struct_button_1_1button__config__t_a7ce7d7d90124d2316b89cd1d796dbb31}\label{struct_button_1_1button__config__t_a7ce7d7d90124d2316b89cd1d796dbb31} 
+\index{Button::button\_config\_t@{Button::button\_config\_t}!pull\_en@{pull\_en}}
+\index{pull\_en@{pull\_en}!Button::button\_config\_t@{Button::button\_config\_t}}
+\doxysubsubsection{\texorpdfstring{pull\_en}{pull\_en}}
+{\footnotesize\ttfamily bool Button\+::button\+\_\+config\+\_\+t\+::pull\+\_\+en}
+
+
+
+true if internal pullup (for active low) or pulldown (for active high) should be enabled, false if using external pullup/pulldown 
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+D\+:/development/esp/projects/idf\+\_\+4\+\_\+0/data\+\_\+control/components/button\+\_\+controller/\mbox{\hyperlink{_button_8hpp}{Button.\+hpp}}\end{DoxyCompactItemize}

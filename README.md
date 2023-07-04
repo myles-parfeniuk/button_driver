@@ -17,7 +17,7 @@
         <li><a href="#quick start">quick start</a></li>
         <ul>
             <li><a href="#Initializing Button Object">Initializing Button Object</a></li>
-            <li><a href="#Button Events">Handling Button Events</a></li>
+            <li><a href="#Button Events">Button Events</a></li>
             <li><a href="#Handling Button Events">Handling Button Events</a></li>
         </ul>
         <li><a href="#quick example">quick example</a></li>
@@ -47,8 +47,8 @@ Call-back functions that execute whenever user input is detected can then be reg
    ```
 
 
-2. Cd into the newly created components directory and clone both the ButtonDriver & DataControl repos. The button_driver component is dependent  
-   on the data_control component and will not build without it. 
+2. Cd into the newly created components directory and clone both the ButtonDriver & DataControl repos. The   
+   button_driver component is dependent on the data_control component and will not build without it. 
 
    ```sh
    cd components

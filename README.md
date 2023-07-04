@@ -189,7 +189,7 @@ These events come in four flavors:
 ### Handling Button Events
 In order to be notified when a button-event has occurred, a call-back function (or multiple) can be registered with the button by calling the follow() method on its event member.  
 
-As many call-backs as desired can be added to a button using follow(). When a button event occurs, any call-backs registered to a button with follow() will be called in the order they were registered with follow() — this means whichever call-back was registered first has highest priority.  
+As many call-backs as desired can be added to a button using follow(). When a button event occurs, any call-backs registered to a button with follow() will be called in the order they were registered— this means whichever call-back was registered first has highest priority.  
 
 It is recommended to initialize the call-back functions as lambda-functions for easy readability.  
 Any call-back function registered with follow() must take the form:   

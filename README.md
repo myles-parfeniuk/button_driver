@@ -7,23 +7,23 @@
       <a href="#About">About</a>
     </li>
     <li>
-      <a href="#getting-started">getting started</a>
+      <a href="#Getting Started">Getting Started</a>
       <ul>
-        <li><a href="#adding to project">adding to project</a></li>
+        <li><a href="#Adding to Project">Adding to Project</a></li>
       </ul>
     </li>
-   <li><a href="#usage">usage</a></li>
+   <li><a href="#Usage">Usage</a></li>
        <ul>
-        <li><a href="#quick start">quick start</a></li>
+        <li><a href="#Quick Start">Quick Start</a></li>
         <ul>
             <li><a href="#Initializing Button Object">Initializing Button Object</a></li>
             <li><a href="#Button Events">Button Events</a></li>
             <li><a href="#Handling Button Events">Handling Button Events</a></li>
         </ul>
-        <li><a href="#quick example">quick example</a></li>
+        <li><a href="#Examples">Examples</a></li>
       </ul>
-  <li><a href="#license">license</a></li>
-  <li><a href="#contact">contact</a></li>
+  <li><a href="#License">License</a></li>
+  <li><a href="#Contact">Contact</a></li>
   </ol>
 </details>
 
@@ -275,8 +275,9 @@ void my_callback(Button::ButtonEvent event)
 
 
 
-## Quick Example
-
+## Examples
+Examples are available in my esp_idf_cpp_examples repo:
+[Duck Duck Go](https://duckduckgo.com)
 
 <!-- LICENSE -->
 # License

@@ -276,8 +276,9 @@ void my_callback(Button::ButtonEvent event)
 
 
 ## Examples
-Examples are available in my esp_idf_cpp_examples repo:
-[Duck Duck Go](https://duckduckgo.com)
+Examples are available in ButtonDriver directory of my esp_idf_cpp_examples repo:    
+
+[https://github.com/myles-parfeniuk/esp_idf_cpp_examples](https://github.com/myles-parfeniuk/esp_idf_cpp_examples)  
 
 <!-- LICENSE -->
 # License

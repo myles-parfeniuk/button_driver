@@ -93,7 +93,7 @@ If the button_conf_t struct is not initialized correctly the Button constructor 
 
 Example Initializations:  
 
-1. Active-Low w/ no internal pullup  
+1. Active-Low w/ external pullup  
 
 ![image](./documentation/readme_images/ButtonDriver_active_low_external_pullup.png)
 
@@ -113,7 +113,7 @@ Example Initializations:
     Button my_button(button_conf);
 ```
 
-2. Active-Low w/ internal pullup
+2. Active-Low w/ no external pullup
 
 ![image](./documentation/readme_images/ButtonDriver_active_low_no_external_pullup.png)
 
@@ -133,7 +133,7 @@ Example Initializations:
     Button my_button(button_conf);
 ```
 
-3. Active-High w/ no internal pullup
+3. Active-High w/ external pulldown
 
 ![image](./documentation/readme_images/ButtonDriver_active_high_external_pulldown.png)
 
@@ -153,7 +153,7 @@ Example Initializations:
     Button my_button(button_conf);
 ```
 
-4. Active-High w/ internal pullup
+4. Active-High w/ no external pulldown
 
 ![image](./documentation/readme_images/ButtonDriver_active_high_no_external_pulldown.png)
 

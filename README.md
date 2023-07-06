@@ -180,20 +180,20 @@ After being initialized, a Button object will automatically detect any user inpu
 These events come in four flavors:
 
 1. **quick-press:**  
-   This event indicates the switch was momentarily pressed.
+   This event indicates the button was momentarily pressed.
    This event is generated when the push-button is pressed & then released before (25ms + long_press_evt_time) has elapsed. 
 
 2. **long-press:**   
-   This event indicates the switch was pressed and held.
+   This event indicates the button was pressed and held.
    This event is generated when the push-button is pressed & not released after (25ms + long_press_evt_time) has elapsed. 
 
 3. **held:**   
-   This event indicates a long-press event has already occurred, and the switch is still being held. 
-   This event is generated every time held_evt_time elapses, after a long-press event, until the switch is released.
+   This event indicates a long-press event has already occurred, and the button is still being held. 
+   This event is generated every time held_evt_time elapses, after a long-press event, until the button is released.
 
 4. **released:**   
-   This event indicates the switch has been released.
-   This event is generated if the switch is released any time after a long_press event has occurred. 
+   This event indicates the button has been released.
+   This event is generated if the button is released any time after a long_press event has occurred. 
 
 ### Handling Button Events
 In order to be notified when a button-event has occurred, a call-back function (or multiple) can be registered with the button by calling the follow() method on its event member.  

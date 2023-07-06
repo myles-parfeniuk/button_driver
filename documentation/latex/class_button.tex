@@ -35,25 +35,30 @@ bool \mbox{\hyperlink{class_button_a713b68291767522afcc497527010583f}{scan}} ()
 \item 
 Data\+Control\+::\+Call\+Always$<$ \mbox{\hyperlink{class_button_a8116e8c26b547c2801572f7b45aceea8}{Button\+Event}} $>$ \mbox{\hyperlink{class_button_a77c3cd3d62682c2ae22f43cb301329d3}{event}}
 \begin{DoxyCompactList}\small\item\em Data\+Wrapper containing button event, call-\/back function can be registered to button with follow() method (see data\+\_\+control documentation) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_button_a606c22a20a0c5473812a789009d932f6}{get\+\_\+button\+\_\+level}} ()
+\begin{DoxyCompactList}\small\item\em Get level of a button, called from button task. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_button_ac3631d3fe54a3496c5c4bf7e2c710c68}{generate\+\_\+quick\+\_\+press\+\_\+evt}} ()
+\begin{DoxyCompactList}\small\item\em Generate a quick-\/press event. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_button_ab9fb6cdcec33c78c4814fc86701bdc7a}{generate\+\_\+long\+\_\+press\+\_\+evt}} ()
+\begin{DoxyCompactList}\small\item\em Generate a long-\/press event. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_button_ac6805cf87bb0b7bb3308d2e604f4e7dd}{generate\+\_\+held\+\_\+evt}} ()
+\begin{DoxyCompactList}\small\item\em Generate a held event. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_button_a93bece5aeb0aa85339d669f21e457b8e}{generate\+\_\+released\+\_\+evt}} ()
+\begin{DoxyCompactList}\small\item\em Generate a released event. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_button_a2e9bf9e7463d7c82dbf7834c8a822274}{press\+\_\+check}} ()
+\begin{DoxyCompactList}\small\item\em Detect quick-\/press or long-\/press event. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_button_a2f3dfe22e3fcb1b2df144b3ae08b09b3}{released\+\_\+check}} ()
+\begin{DoxyCompactList}\small\item\em Generate held events until button is released. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_button_ac7e3de5e746361d1a4e6aa6a5bbcb793}{button\+\_\+task}} ()
+\begin{DoxyCompactList}\small\item\em Task responsible for detecting and generating events. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Static Private Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-static bool \mbox{\hyperlink{class_button_ade129e1730281d6cc1cfd11482f1f2b5}{get\+\_\+button\+\_\+level}} (\mbox{\hyperlink{class_button}{Button}} \texorpdfstring{$\ast$}{*}button)
-\begin{DoxyCompactList}\small\item\em Get level of a button, called from button task. \end{DoxyCompactList}\item 
-static void \mbox{\hyperlink{class_button_a451d7f1583821f17ccde59af929a653a}{generate\+\_\+quick\+\_\+press\+\_\+evt}} (\mbox{\hyperlink{class_button}{Button}} \texorpdfstring{$\ast$}{*}button)
-\begin{DoxyCompactList}\small\item\em Generate a quick-\/press event. \end{DoxyCompactList}\item 
-static void \mbox{\hyperlink{class_button_a29db4073f4f18d62501bd76b32e395aa}{generate\+\_\+long\+\_\+press\+\_\+evt}} (\mbox{\hyperlink{class_button}{Button}} \texorpdfstring{$\ast$}{*}button)
-\begin{DoxyCompactList}\small\item\em Generate a long-\/press event. \end{DoxyCompactList}\item 
-static void \mbox{\hyperlink{class_button_a0be21e75edf5a35269a08a57525dca97}{generate\+\_\+held\+\_\+evt}} (\mbox{\hyperlink{class_button}{Button}} \texorpdfstring{$\ast$}{*}button)
-\begin{DoxyCompactList}\small\item\em Generate a held event. \end{DoxyCompactList}\item 
-static void \mbox{\hyperlink{class_button_aa776a3a23c461bd31b6335e55b454b66}{generate\+\_\+released\+\_\+evt}} (\mbox{\hyperlink{class_button}{Button}} \texorpdfstring{$\ast$}{*}button)
-\begin{DoxyCompactList}\small\item\em Generate a released event. \end{DoxyCompactList}\item 
-static bool \mbox{\hyperlink{class_button_aee4cfc29bbcb81ad3ce9550e5ea577ba}{press\+\_\+check}} (\mbox{\hyperlink{class_button}{Button}} \texorpdfstring{$\ast$}{*}button)
-\begin{DoxyCompactList}\small\item\em Detect quick-\/press or long-\/press event. \end{DoxyCompactList}\item 
-static void \mbox{\hyperlink{class_button_a5c22d473a713f659826475a966f2ed94}{released\+\_\+check}} (\mbox{\hyperlink{class_button}{Button}} \texorpdfstring{$\ast$}{*}button)
-\begin{DoxyCompactList}\small\item\em Generate held events until button is released. \end{DoxyCompactList}\item 
-static void \mbox{\hyperlink{class_button_aa819877f2005d6aa6cc0614dcea49e47}{button\+\_\+task}} (void \texorpdfstring{$\ast$}{*}button)
-\begin{DoxyCompactList}\small\item\em Task responsible for detecting and generating events. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{class_button_aae67a1e052c81ad02d1e0ecc8e823af5}{button\+\_\+task\+\_\+trampoline}} (void \texorpdfstring{$\ast$}{*}arg)
+\begin{DoxyCompactList}\small\item\em Launches button task. \end{DoxyCompactList}\item 
 static void IRAM\+\_\+\+ATTR \mbox{\hyperlink{class_button_a380a98af49d16f41dd9c8ba70ed03e23}{button\+\_\+handler}} (void \texorpdfstring{$\ast$}{*}arg)
 \begin{DoxyCompactList}\small\item\em ISR handler responsible for handling button activity. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Private Attributes}
@@ -189,11 +194,11 @@ button activity triggers isr -\/-\/\texorpdfstring{$>$}{>} interrupt disabled -\
 \begin{DoxyReturn}{Returns}
 void, nothing to return 
 \end{DoxyReturn}
-\Hypertarget{class_button_aa819877f2005d6aa6cc0614dcea49e47}\label{class_button_aa819877f2005d6aa6cc0614dcea49e47} 
+\Hypertarget{class_button_ac7e3de5e746361d1a4e6aa6a5bbcb793}\label{class_button_ac7e3de5e746361d1a4e6aa6a5bbcb793} 
 \index{Button@{Button}!button\_task@{button\_task}}
 \index{button\_task@{button\_task}!Button@{Button}}
 \doxysubsubsection{\texorpdfstring{button\_task()}{button\_task()}}
-{\footnotesize\ttfamily void Button\+::button\+\_\+task (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{button }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+{\footnotesize\ttfamily void Button\+::button\+\_\+task (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
 
 
@@ -201,7 +206,7 @@ Task responsible for detecting and generating events.
 
 This task is awoken by the button\+\_\+handler isr when any button activity is detected. It detects and generates events until the button is released. After the button is released the task suspends itself until it is again resumed from the button\+\_\+handler isr.
 
-button activity triggers isr -\/-\/\texorpdfstring{$>$}{>} interrupt disabled -\/-\/\texorpdfstring{$>$}{>} button\+\_\+task is resumed -\/-\/\texorpdfstring{$>$}{>} events are detected and generated -\/-\/\texorpdfstring{$>$}{>} button release detected -\/-\/\texorpdfstring{$>$}{>} interrupt enabled -\/-\/\texorpdfstring{$>$}{>} button\+\_\+task\+\_\+suspended
+button activity triggers isr -\/-\/\texorpdfstring{$>$}{>} interrupt disabled -\/-\/\texorpdfstring{$>$}{>} button\+\_\+task is resumed -\/-\/\texorpdfstring{$>$}{>} events are detected and generated -\/-\/\texorpdfstring{$>$}{>} button release detected -\/-\/\texorpdfstring{$>$}{>} interrupt enabled -\/-\/\texorpdfstring{$>$}{>} button\+\_\+task suspended
 
 
 \begin{DoxyParams}{Parameters}
@@ -211,17 +216,37 @@ button activity triggers isr -\/-\/\texorpdfstring{$>$}{>} interrupt disabled -\
 \begin{DoxyReturn}{Returns}
 void, nothing to return 
 \end{DoxyReturn}
-\Hypertarget{class_button_a0be21e75edf5a35269a08a57525dca97}\label{class_button_a0be21e75edf5a35269a08a57525dca97} 
+\Hypertarget{class_button_aae67a1e052c81ad02d1e0ecc8e823af5}\label{class_button_aae67a1e052c81ad02d1e0ecc8e823af5} 
+\index{Button@{Button}!button\_task\_trampoline@{button\_task\_trampoline}}
+\index{button\_task\_trampoline@{button\_task\_trampoline}!Button@{Button}}
+\doxysubsubsection{\texorpdfstring{button\_task\_trampoline()}{button\_task\_trampoline()}}
+{\footnotesize\ttfamily void Button\+::button\+\_\+task\+\_\+trampoline (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{arg }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+Launches button task. 
+
+This function is used to get around the fact x\+Task\+Create() from the freertos api requires a static task function. To prevent having to write the button task from the context of a static function, this launches the \doxylink{class_button_ac7e3de5e746361d1a4e6aa6a5bbcb793}{button\+\_\+task()} from the \doxylink{class_button}{Button} object passed into x\+Task\+Create().
+
+
+\begin{DoxyParams}{Parameters}
+{\em arg} & a pointer to the button to detect events for casted to a void pointer \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void, nothing to return 
+\end{DoxyReturn}
+\Hypertarget{class_button_ac6805cf87bb0b7bb3308d2e604f4e7dd}\label{class_button_ac6805cf87bb0b7bb3308d2e604f4e7dd} 
 \index{Button@{Button}!generate\_held\_evt@{generate\_held\_evt}}
 \index{generate\_held\_evt@{generate\_held\_evt}!Button@{Button}}
 \doxysubsubsection{\texorpdfstring{generate\_held\_evt()}{generate\_held\_evt()}}
-{\footnotesize\ttfamily void Button\+::generate\+\_\+held\+\_\+evt (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_button}{Button}} \texorpdfstring{$\ast$}{*}}]{button }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+{\footnotesize\ttfamily void Button\+::generate\+\_\+held\+\_\+evt (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
 
 
 Generate a held event. 
 
-Generates a held event by calling set() method on button-\/\texorpdfstring{$>$}{>}event. This will execute any call-\/backs registered to the button and set pending\+\_\+scan to true.
+Generates a held event by calling set() method on this-\/\texorpdfstring{$>$}{>}event. This will execute any call-\/backs registered to the button and set pending\+\_\+scan to true.
 
 
 \begin{DoxyParams}{Parameters}
@@ -231,17 +256,17 @@ Generates a held event by calling set() method on button-\/\texorpdfstring{$>$}{
 \begin{DoxyReturn}{Returns}
 void, nothing to return 
 \end{DoxyReturn}
-\Hypertarget{class_button_a29db4073f4f18d62501bd76b32e395aa}\label{class_button_a29db4073f4f18d62501bd76b32e395aa} 
+\Hypertarget{class_button_ab9fb6cdcec33c78c4814fc86701bdc7a}\label{class_button_ab9fb6cdcec33c78c4814fc86701bdc7a} 
 \index{Button@{Button}!generate\_long\_press\_evt@{generate\_long\_press\_evt}}
 \index{generate\_long\_press\_evt@{generate\_long\_press\_evt}!Button@{Button}}
 \doxysubsubsection{\texorpdfstring{generate\_long\_press\_evt()}{generate\_long\_press\_evt()}}
-{\footnotesize\ttfamily void Button\+::generate\+\_\+long\+\_\+press\+\_\+evt (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_button}{Button}} \texorpdfstring{$\ast$}{*}}]{button }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+{\footnotesize\ttfamily void Button\+::generate\+\_\+long\+\_\+press\+\_\+evt (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
 
 
 Generate a long-\/press event. 
 
-Generates a long press event by calling set() method on button-\/\texorpdfstring{$>$}{>}event. This will execute any call-\/backs registered to the button and set pending\+\_\+scan to true.
+Generates a long press event by calling set() method on this-\/\texorpdfstring{$>$}{>}event. This will execute any call-\/backs registered to the button and set pending\+\_\+scan to true.
 
 
 \begin{DoxyParams}{Parameters}
@@ -251,17 +276,17 @@ Generates a long press event by calling set() method on button-\/\texorpdfstring
 \begin{DoxyReturn}{Returns}
 void, nothing to return 
 \end{DoxyReturn}
-\Hypertarget{class_button_a451d7f1583821f17ccde59af929a653a}\label{class_button_a451d7f1583821f17ccde59af929a653a} 
+\Hypertarget{class_button_ac3631d3fe54a3496c5c4bf7e2c710c68}\label{class_button_ac3631d3fe54a3496c5c4bf7e2c710c68} 
 \index{Button@{Button}!generate\_quick\_press\_evt@{generate\_quick\_press\_evt}}
 \index{generate\_quick\_press\_evt@{generate\_quick\_press\_evt}!Button@{Button}}
 \doxysubsubsection{\texorpdfstring{generate\_quick\_press\_evt()}{generate\_quick\_press\_evt()}}
-{\footnotesize\ttfamily void Button\+::generate\+\_\+quick\+\_\+press\+\_\+evt (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_button}{Button}} \texorpdfstring{$\ast$}{*}}]{button }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+{\footnotesize\ttfamily void Button\+::generate\+\_\+quick\+\_\+press\+\_\+evt (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
 
 
 Generate a quick-\/press event. 
 
-Generates a quick-\/press event by calling set() method on button-\/\texorpdfstring{$>$}{>}event. This will execute any call-\/backs registered to the button and set pending\+\_\+scan to true.
+Generates a quick-\/press event by calling set() method on this-\/\texorpdfstring{$>$}{>}event. This will execute any call-\/backs registered to the button and set pending\+\_\+scan to true.
 
 
 \begin{DoxyParams}{Parameters}
@@ -271,17 +296,17 @@ Generates a quick-\/press event by calling set() method on button-\/\texorpdfstr
 \begin{DoxyReturn}{Returns}
 void, nothing to return 
 \end{DoxyReturn}
-\Hypertarget{class_button_aa776a3a23c461bd31b6335e55b454b66}\label{class_button_aa776a3a23c461bd31b6335e55b454b66} 
+\Hypertarget{class_button_a93bece5aeb0aa85339d669f21e457b8e}\label{class_button_a93bece5aeb0aa85339d669f21e457b8e} 
 \index{Button@{Button}!generate\_released\_evt@{generate\_released\_evt}}
 \index{generate\_released\_evt@{generate\_released\_evt}!Button@{Button}}
 \doxysubsubsection{\texorpdfstring{generate\_released\_evt()}{generate\_released\_evt()}}
-{\footnotesize\ttfamily void Button\+::generate\+\_\+released\+\_\+evt (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_button}{Button}} \texorpdfstring{$\ast$}{*}}]{button }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+{\footnotesize\ttfamily void Button\+::generate\+\_\+released\+\_\+evt (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
 
 
 Generate a released event. 
 
-Generates a released event by calling set() method on button-\/\texorpdfstring{$>$}{>}event. This will execute any call-\/backs registered to the button and set pending\+\_\+scan to true.
+Generates a released event by calling set() method on this-\/\texorpdfstring{$>$}{>}event. This will execute any call-\/backs registered to the button and set pending\+\_\+scan to true.
 
 
 \begin{DoxyParams}{Parameters}
@@ -291,11 +316,11 @@ Generates a released event by calling set() method on button-\/\texorpdfstring{$
 \begin{DoxyReturn}{Returns}
 void, nothing to return 
 \end{DoxyReturn}
-\Hypertarget{class_button_ade129e1730281d6cc1cfd11482f1f2b5}\label{class_button_ade129e1730281d6cc1cfd11482f1f2b5} 
+\Hypertarget{class_button_a606c22a20a0c5473812a789009d932f6}\label{class_button_a606c22a20a0c5473812a789009d932f6} 
 \index{Button@{Button}!get\_button\_level@{get\_button\_level}}
 \index{get\_button\_level@{get\_button\_level}!Button@{Button}}
 \doxysubsubsection{\texorpdfstring{get\_button\_level()}{get\_button\_level()}}
-{\footnotesize\ttfamily bool Button\+::get\+\_\+button\+\_\+level (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_button}{Button}} \texorpdfstring{$\ast$}{*}}]{button }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+{\footnotesize\ttfamily bool Button\+::get\+\_\+button\+\_\+level (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
 
 
@@ -311,11 +336,11 @@ Get the current level of a button (whether the button is currently being pressed
 \begin{DoxyReturn}{Returns}
 true if button is currently being pressed, false if button inactive 
 \end{DoxyReturn}
-\Hypertarget{class_button_aee4cfc29bbcb81ad3ce9550e5ea577ba}\label{class_button_aee4cfc29bbcb81ad3ce9550e5ea577ba} 
+\Hypertarget{class_button_a2e9bf9e7463d7c82dbf7834c8a822274}\label{class_button_a2e9bf9e7463d7c82dbf7834c8a822274} 
 \index{Button@{Button}!press\_check@{press\_check}}
 \index{press\_check@{press\_check}!Button@{Button}}
 \doxysubsubsection{\texorpdfstring{press\_check()}{press\_check()}}
-{\footnotesize\ttfamily bool Button\+::press\+\_\+check (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_button}{Button}} \texorpdfstring{$\ast$}{*}}]{button }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+{\footnotesize\ttfamily bool Button\+::press\+\_\+check (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
 
 
@@ -331,11 +356,11 @@ Generates a quick-\/press event if button is released before (25ms + button-\/\t
 \begin{DoxyReturn}{Returns}
 void, nothing to return 
 \end{DoxyReturn}
-\Hypertarget{class_button_a5c22d473a713f659826475a966f2ed94}\label{class_button_a5c22d473a713f659826475a966f2ed94} 
+\Hypertarget{class_button_a2f3dfe22e3fcb1b2df144b3ae08b09b3}\label{class_button_a2f3dfe22e3fcb1b2df144b3ae08b09b3} 
 \index{Button@{Button}!released\_check@{released\_check}}
 \index{released\_check@{released\_check}!Button@{Button}}
 \doxysubsubsection{\texorpdfstring{released\_check()}{released\_check()}}
-{\footnotesize\ttfamily void Button\+::released\+\_\+check (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_button}{Button}} \texorpdfstring{$\ast$}{*}}]{button }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+{\footnotesize\ttfamily void Button\+::released\+\_\+check (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
 
 
@@ -467,5 +492,5 @@ class tag, used in debug logs
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 
-D\+:/development/esp/projects/idf\+\_\+4\+\_\+0/data\+\_\+control/components/button\+\_\+controller/\mbox{\hyperlink{_button_8hpp}{Button.\+hpp}}\item 
-D\+:/development/esp/projects/idf\+\_\+4\+\_\+0/data\+\_\+control/components/button\+\_\+controller/\mbox{\hyperlink{_button_8cpp}{Button.\+cpp}}\end{DoxyCompactItemize}
+D\+:/development/esp/projects/idf\+\_\+4\+\_\+0/data\+\_\+control/components/button\+\_\+driver/\mbox{\hyperlink{_button_8hpp}{Button.\+hpp}}\item 
+D\+:/development/esp/projects/idf\+\_\+4\+\_\+0/data\+\_\+control/components/button\+\_\+driver/\mbox{\hyperlink{_button_8cpp}{Button.\+cpp}}\end{DoxyCompactItemize}

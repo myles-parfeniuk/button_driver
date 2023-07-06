@@ -97,7 +97,7 @@ event(Button::ButtonEvent::quick_press), button_conf(button_conf), logging_en(lo
         ESP_ERROR_CHECK(gpio_isr_handler_add(button_conf.gpio_num, button_handler, (void *)this)); //add button isr handler
 
         initialized = false; //set initialized as false until task has been created, and suspended from within itself
-        xTaskCreate(&button_task, "button_task", 2048, this, 4, &button_task_hdl);
+        xTaskCreate(&button_task_trampoline, "button_task", 2048, this, 4, &button_task_hdl);
 
         if(logging_en){
             ESP_LOGI(TAG, "ButtonName: %s| GPIO[%2d]| ActiveLow: %s| ActiveHi: %s| InternalPullUpDown: %s| LongPressEvtTime: %lld us| HeldEvtTime: %lld us", 
@@ -122,31 +122,38 @@ bool Button::scan()
     }
 }
 
- void Button::button_task(void *button){
-
-    Button *local_button = (Button *)button; 
+ void Button::button_task(void){
 
     while(1){
         //if button has been initialized
-        if(local_button->initialized){
+        if(initialized){
                 //when this statement is entered, the task has been awoken from the ISR meaning button activity was detected
 
                 vTaskDelay(25/portTICK_PERIOD_MS); //debounce press
 
                 //check for press type, if button is not released (long press) then check for release event
-                if(!press_check(local_button))
-                    released_check(local_button);   
+                if(!press_check())
+                    released_check();   
         }
         else{
-            local_button->initialized = true; //initialize button
+            initialized = true; //initialize button
         }
 
-        gpio_intr_enable(local_button->button_conf.gpio_num); //re-enable interrupts to resume task if button activity is detected
+        gpio_intr_enable(button_conf.gpio_num); //re-enable interrupts to resume task if button activity is detected
         vTaskSuspend(NULL);  //self-suspend task until button activity is again detected via external interrupt 
     }
  }
 
-bool Button::press_check(Button *button)
+ void Button::button_task_trampoline(void *arg)
+ {
+    Button *local_button = (Button *)arg; //cast to button pointer
+
+    local_button->button_task(); //launch button task
+
+ }
+
+
+bool Button::press_check()
 {
     int64_t time_stamp = esp_timer_get_time();
     bool press_check = false;
@@ -156,20 +163,20 @@ bool Button::press_check(Button *button)
     while(!press_check)
     {
         //if button released
-        if(!get_button_level(button))
+        if(!get_button_level())
         {
             //generate quick press event and exit long-press check, and skip release check
             press_check = true;
             released = true; 
-            generate_quick_press_evt(button); //generate quick press event
+            generate_quick_press_evt(); //generate quick press event
             vTaskDelay(25/portTICK_PERIOD_MS); //release debounce
         } 
         //long-press event time exceeded
-        else if((esp_timer_get_time() - time_stamp) > button->button_conf.long_press_evt_time)
+        else if((esp_timer_get_time() - time_stamp) > button_conf.long_press_evt_time)
         {
             //generate long press event and exit long-press check, progress to release check
             press_check = true; 
-            generate_long_press_evt(button); //generate long press event
+            generate_long_press_evt(); //generate long press event
         }
 
         vTaskDelay(15/portTICK_PERIOD_MS);
@@ -179,7 +186,7 @@ bool Button::press_check(Button *button)
 
 }
 
-void Button::released_check(Button *button)
+void Button::released_check()
 {
     bool released_check = false;
     int64_t time_stamp = esp_timer_get_time(); 
@@ -188,19 +195,19 @@ void Button::released_check(Button *button)
     while(!released_check)
     {
         //if button released
-        if(!get_button_level(button))
+        if(!get_button_level())
         {
             //generate release event and exit release check
             released_check = true;
-            generate_released_evt(button);
+            generate_released_evt();
             vTaskDelay(25/portTICK_PERIOD_MS); //release debounce
         }
         //if held event generation time exceeded
-        else if((esp_timer_get_time() - time_stamp) > button->button_conf.held_evt_time)
+        else if((esp_timer_get_time() - time_stamp) > button_conf.held_evt_time)
         {
             //reset time stamp generate held event
             time_stamp = esp_timer_get_time(); 
-            generate_held_evt(button);
+            generate_held_evt();
                         
         }
 
@@ -208,47 +215,47 @@ void Button::released_check(Button *button)
     }
 }
 
-bool Button::get_button_level(Button *button)
+bool Button::get_button_level()
 {
-    if(button->button_conf.active_hi)
-        return gpio_get_level(button->button_conf.gpio_num);  //if active-high button return true when gpio is high
-    else if(button->button_conf.active_lo)
-        return !gpio_get_level(button->button_conf.gpio_num); //if active-low button return true when gpio is low
+    if(button_conf.active_hi)
+        return gpio_get_level(button_conf.gpio_num);  //if active-high button return true when gpio is high
+    else if(button_conf.active_lo)
+        return !gpio_get_level(button_conf.gpio_num); //if active-low button return true when gpio is low
     else
         return false; //if this statement is executed, user ignored error codes and backtrace dump from constructor
 
 }
 
-void Button::generate_quick_press_evt(Button *button)
+void Button::generate_quick_press_evt()
 {
-    button->event.set(ButtonEvent::quick_press);
-    button->pending_scan = true;
-    if(button->logging_en)
-        ESP_LOGI(TAG, "%s -> quick-press", button->name);
+    event.set(ButtonEvent::quick_press);
+    pending_scan = true;
+    if(logging_en)
+        ESP_LOGI(TAG, "%s -> quick-press", name);
 }
 
-void Button::generate_long_press_evt(Button *button)
+void Button::generate_long_press_evt()
 {
-    button->event.set(ButtonEvent::long_press);
-    button->pending_scan = true;
-    if(button->logging_en)
-        ESP_LOGI(TAG, "%s -> long-press", button->name);
+    event.set(ButtonEvent::long_press);
+    pending_scan = true;
+    if(logging_en)
+        ESP_LOGI(TAG, "%s -> long-press", name);
 }
 
-void Button::generate_held_evt(Button *button)
+void Button::generate_held_evt()
 {
-    button->event.set(ButtonEvent::held);
-    button->pending_scan = true;
-    if(button->logging_en)
-        ESP_LOGI(TAG, "%s -> held", button->name);
+    event.set(ButtonEvent::held);
+    pending_scan = true;
+    if(logging_en)
+        ESP_LOGI(TAG, "%s -> held", name);
 }
 
-void Button::generate_released_evt(Button *button)
+void Button::generate_released_evt()
 {
-    button->event.set(ButtonEvent::released);
-    button->pending_scan = true;
-    if(button->logging_en)
-        ESP_LOGI(TAG, "%s -> released", button->name);
+    event.set(ButtonEvent::released);
+    pending_scan = true;
+    if(logging_en)
+        ESP_LOGI(TAG, "%s -> released", name);
 }
 
 

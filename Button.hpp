@@ -116,51 +116,51 @@ class Button {
   * @param button the button to read the level of
   * @return true if button is currently being pressed, false if button inactive
   */
-    static bool get_button_level(Button *button); 
+  bool get_button_level(); 
   
   /**
   * @brief Generate a quick-press event.
   * 
-  * Generates a quick-press event by calling set() method on button->event. 
+  * Generates a quick-press event by calling set() method on this->event. 
   * This will execute any call-backs registered to the button and set pending_scan to true.
   * 
   * @param button the button to generate a quick-press event for
   * @return void, nothing to return
   */
-    static void generate_quick_press_evt(Button *button);
+    void generate_quick_press_evt();
 
   /**
   * @brief Generate a long-press event.
   * 
-  * Generates a long press event by calling set() method on button->event. 
+  * Generates a long press event by calling set() method on this->event. 
   * This will execute any call-backs registered to the button and set pending_scan to true.
   * 
   * @param button the button to generate a long-press event for
   * @return void, nothing to return
   */
-    static void generate_long_press_evt(Button *button);
+   void generate_long_press_evt();
 
   /**
   * @brief Generate a held event.
   * 
-  * Generates a held event by calling set() method on button->event. 
+  * Generates a held event by calling set() method on this->event. 
   * This will execute any call-backs registered to the button and set pending_scan to true.
   * 
   * @param button the button to generate a held event for
   * @return void, nothing to return
   */
-    static void generate_held_evt(Button *button);
+   void generate_held_evt();
 
   /**
   * @brief Generate a released event.
   * 
-  * Generates a released event by calling set() method on button->event. 
+  * Generates a released event by calling set() method on this->event. 
   * This will execute any call-backs registered to the button and set pending_scan to true.
   * 
   * @param button the button to generate a released event for
   * @return void, nothing to return
   */
-    static void generate_released_evt(Button *button);
+   void generate_released_evt();
    
   /**
   * @brief Detect quick-press or long-press event.
@@ -171,7 +171,7 @@ class Button {
   * @param button the button to detect press type for
   * @return void, nothing to return
   */
-    static bool press_check(Button *button);
+    bool press_check();
   
   /**
   * @brief Generate held events until button is released.
@@ -182,7 +182,7 @@ class Button {
   * @param button the button to detect release of and generate held events for
   * @return void, nothing to return
   */
-    static void released_check(Button *button);
+  void released_check();
   
   /**
   * @brief Task responsible for detecting and generating events.
@@ -192,12 +192,24 @@ class Button {
   * After the button is released the task suspends itself until it is again resumed from the button_handler isr.
   * 
   * button activity triggers isr --> interrupt disabled --> button_task is resumed --> events are detected and generated --> 
-  * button release detected --> interrupt enabled --> button_task_suspended
+  * button release detected --> interrupt enabled --> button_task suspended
   * 
   * @param button the button to detect and generate events for
   * @return void, nothing to return
   */
-    static void button_task(void *button);
+  void button_task();
+
+  /**
+  * @brief Launches button task.
+  * 
+  * This function is used to get around the fact xTaskCreate() from the freertos api requires a static task function.
+  * To prevent having to write the button task from the context of a static function, this launches the button_task()
+  * from the Button object passed into xTaskCreate().
+  * 
+  * @param arg a pointer to the button to detect events for casted to a void pointer
+  * @return void, nothing to return
+  */
+  static void button_task_trampoline(void *arg);
 
   /**
   * @brief ISR handler responsible for handling button activity.
@@ -213,6 +225,7 @@ class Button {
   * @return void, nothing to return
   */
     static void IRAM_ATTR button_handler(void *arg);
+
     xTaskHandle button_task_hdl; ///<task handle of button-task
     static const constexpr char* TAG = "Button"; ///<class tag, used in debug logs
     static bool isr_service_installed; ///<true of the isr service has been installed, false until first button is created

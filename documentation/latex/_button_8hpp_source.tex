@@ -1,5 +1,5 @@
 \doxysection{Button.\+hpp}
-\hypertarget{_button_8hpp_source}{}\label{_button_8hpp_source}\index{D:/development/esp/projects/idf\_4\_0/data\_control/components/button\_controller/Button.hpp@{D:/development/esp/projects/idf\_4\_0/data\_control/components/button\_controller/Button.hpp}}
+\hypertarget{_button_8hpp_source}{}\label{_button_8hpp_source}\index{D:/development/esp/projects/idf\_4\_0/data\_control/components/button\_driver/Button.hpp@{D:/development/esp/projects/idf\_4\_0/data\_control/components/button\_driver/Button.hpp}}
 \mbox{\hyperlink{_button_8hpp}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
@@ -51,28 +51,31 @@
 \DoxyCodeLine{00108\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_button_a0bb59aba9e0eddec6231e44a825578f2}{pending\_scan}};\ \ }
 \DoxyCodeLine{00109\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{class_button_a7f62bfcedac3168177a12db8483e3e3a}{name}};\ }
 \DoxyCodeLine{00110\ \ \ }
-\DoxyCodeLine{00119\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_button_ade129e1730281d6cc1cfd11482f1f2b5}{get\_button\_level}}(\mbox{\hyperlink{class_button}{Button}}\ *button);\ }
+\DoxyCodeLine{00119\ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_button_a606c22a20a0c5473812a789009d932f6}{get\_button\_level}}();\ }
 \DoxyCodeLine{00120\ \ \ }
-\DoxyCodeLine{00130\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_button_a451d7f1583821f17ccde59af929a653a}{generate\_quick\_press\_evt}}(\mbox{\hyperlink{class_button}{Button}}\ *button);}
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_button_ac3631d3fe54a3496c5c4bf7e2c710c68}{generate\_quick\_press\_evt}}();}
 \DoxyCodeLine{00131\ }
-\DoxyCodeLine{00141\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_button_a29db4073f4f18d62501bd76b32e395aa}{generate\_long\_press\_evt}}(\mbox{\hyperlink{class_button}{Button}}\ *button);}
+\DoxyCodeLine{00141\ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_button_ab9fb6cdcec33c78c4814fc86701bdc7a}{generate\_long\_press\_evt}}();}
 \DoxyCodeLine{00142\ }
-\DoxyCodeLine{00152\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_button_a0be21e75edf5a35269a08a57525dca97}{generate\_held\_evt}}(\mbox{\hyperlink{class_button}{Button}}\ *button);}
+\DoxyCodeLine{00152\ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_button_ac6805cf87bb0b7bb3308d2e604f4e7dd}{generate\_held\_evt}}();}
 \DoxyCodeLine{00153\ }
-\DoxyCodeLine{00163\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_button_aa776a3a23c461bd31b6335e55b454b66}{generate\_released\_evt}}(\mbox{\hyperlink{class_button}{Button}}\ *button);}
+\DoxyCodeLine{00163\ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_button_a93bece5aeb0aa85339d669f21e457b8e}{generate\_released\_evt}}();}
 \DoxyCodeLine{00164\ \ \ \ }
-\DoxyCodeLine{00174\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_button_aee4cfc29bbcb81ad3ce9550e5ea577ba}{press\_check}}(\mbox{\hyperlink{class_button}{Button}}\ *button);}
+\DoxyCodeLine{00174\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_button_a2e9bf9e7463d7c82dbf7834c8a822274}{press\_check}}();}
 \DoxyCodeLine{00175\ \ \ }
-\DoxyCodeLine{00185\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_button_a5c22d473a713f659826475a966f2ed94}{released\_check}}(\mbox{\hyperlink{class_button}{Button}}\ *button);}
+\DoxyCodeLine{00185\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_button_a2f3dfe22e3fcb1b2df144b3ae08b09b3}{released\_check}}();}
 \DoxyCodeLine{00186\ \ \ }
-\DoxyCodeLine{00200\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_button_aa819877f2005d6aa6cc0614dcea49e47}{button\_task}}(\textcolor{keywordtype}{void}\ *button);}
+\DoxyCodeLine{00200\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_button_ac7e3de5e746361d1a4e6aa6a5bbcb793}{button\_task}}();}
 \DoxyCodeLine{00201\ }
-\DoxyCodeLine{00215\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ IRAM\_ATTR\ \mbox{\hyperlink{class_button_a380a98af49d16f41dd9c8ba70ed03e23}{button\_handler}}(\textcolor{keywordtype}{void}\ *arg);}
-\DoxyCodeLine{00216\ \ \ \ \ xTaskHandle\ \mbox{\hyperlink{class_button_a95538e961b9beaae917761c4e84830ab}{button\_task\_hdl}};\ }
-\DoxyCodeLine{00217\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{class_button_a2d65daf4266db3718f2ea475315f0451}{TAG}}\ =\ \textcolor{stringliteral}{"{}Button"{}};\ }
-\DoxyCodeLine{00218\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_button_ac7a7ea213cdfc221d42d457d89e44906}{isr\_service\_installed}};\ }
-\DoxyCodeLine{00219\ \ }
-\DoxyCodeLine{00220\ \ \ \ }
-\DoxyCodeLine{00221\ \};}
+\DoxyCodeLine{00212\ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_button_aae67a1e052c81ad02d1e0ecc8e823af5}{button\_task\_trampoline}}(\textcolor{keywordtype}{void}\ *arg);}
+\DoxyCodeLine{00213\ }
+\DoxyCodeLine{00227\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ IRAM\_ATTR\ \mbox{\hyperlink{class_button_a380a98af49d16f41dd9c8ba70ed03e23}{button\_handler}}(\textcolor{keywordtype}{void}\ *arg);}
+\DoxyCodeLine{00228\ }
+\DoxyCodeLine{00229\ \ \ \ \ xTaskHandle\ \mbox{\hyperlink{class_button_a95538e961b9beaae917761c4e84830ab}{button\_task\_hdl}};\ }
+\DoxyCodeLine{00230\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{class_button_a2d65daf4266db3718f2ea475315f0451}{TAG}}\ =\ \textcolor{stringliteral}{"{}Button"{}};\ }
+\DoxyCodeLine{00231\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_button_ac7a7ea213cdfc221d42d457d89e44906}{isr\_service\_installed}};\ }
+\DoxyCodeLine{00232\ \ }
+\DoxyCodeLine{00233\ \ \ \ }
+\DoxyCodeLine{00234\ \};}
 
 \end{DoxyCode}

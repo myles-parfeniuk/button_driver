@@ -21,6 +21,7 @@
             <li><a href="#Handling Button Events">Handling Button Events</a></li>
         </ul>
         <li><a href="#Examples">Examples</a></li>
+        <li><a href="#Program Flowchart">Examples</a></li>
       </ul>
   <li><a href="#License">License</a></li>
   <li><a href="#Contact">Contact</a></li>
@@ -276,9 +277,12 @@ void my_callback(Button::ButtonEvent event)
 
 
 ## Examples
-Examples are available in ButtonDriver directory of my esp_idf_cpp_examples repo:    
+Examples are available in the ButtonDriver directory of my esp_idf_cpp_examples repo:    
 
-[https://github.com/myles-parfeniuk/esp_idf_cpp_examples](https://github.com/myles-parfeniuk/esp_idf_cpp_examples)  
+[https://github.com/myles-parfeniuk/esp_idf_cpp_examples](https://github.com/myles-parfeniuk/esp_idf_cpp_examples)
+
+## Program Flowchart
+![image](./documentation/readme_images/ButtonDriver_flow_chart.png)
 
 <!-- LICENSE -->
 # License

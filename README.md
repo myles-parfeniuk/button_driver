@@ -1,46 +1,48 @@
+<a name="readme-top"></a>
 ![image](./documentation/readme_images/ButtonDriver_banner.png)
 <!-- TABLE OF CONTENTS -->
 <details>
   <summary>Table of Contents</summary>
   <ol>
     <li>
-      <a href="#About">About</a>
+      <a href="#about">About</a>
     </li>
     <li>
-      <a href="#Getting Started">Getting Started</a>
+      <a href="#getting-started">Getting Started</a>
       <ul>
-        <li><a href="#Adding to Project">Adding to Project</a></li>
+        <li><a href="#adding-to-project">Adding to Project</a></li>
       </ul>
     </li>
-   <li><a href="#Usage">Usage</a></li>
-       <ul>
-        <li><a href="#Quick Start">Quick Start</a></li>
-        <ul>
-            <li><a href="#Initializing Button Object">Initializing Button Object</a></li>
-            <li><a href="#Button Events">Button Events</a></li>
-            <li><a href="#Handling Button Events">Handling Button Events</a></li>
-        </ul>
-        <li><a href="#Examples">Examples</a></li>
-        <li><a href="#Program Flowchart">Examples</a></li>
+    <li><a href="#usage">Usage</a></li>
+    <ul>
+      <li><a href="#quick-start">Quick Start</a></li>
+      <ul>
+        <li><a href="#initializing-button-object">Initializing Button Object</a></li>
+        <li><a href="#button-events">Button Events</a></li>
+        <li><a href="#handling-button-events">Handling Button Events</a></li>
       </ul>
-  <li><a href="#License">License</a></li>
-  <li><a href="#Contact">Contact</a></li>
+      <li><a href="#examples">Examples</a></li>
+      <li><a href="#program-flowchart">Program Flowchart</a></li>
+    </ul>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
   </ol>
 </details>
 
 
 <!-- ABOUT -->
-# About
+## About
 
 ButtonDriver is a C++ based component written for esp-idf version 4.0, intended to simplify the use of push-buttons and tactile switches with the esp-32.  
 It allows for the creation of Button objects which automatically detect user input from externally connected tactile switches or push-buttons.  
 Call-back functions can be registered to button objects and used to handle detected user input.   
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+## Getting Started
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-# Getting Started
+### Adding to Project
 
-
-## Adding to Project
 1. Create a "components" directory in the root workspace directory of your esp-idf project if it does not exist already.
 
    In workspace directory:     
@@ -62,20 +64,22 @@ Call-back functions can be registered to button objects and used to handle detec
 3. You may have to edit project CMakeLists.txt file to include the components.  
    
    For example:  
-   ```shs
+   ```sh
    idf_component_register(SRC_DIRS "." 
    INCLUDE_DIRS "" 
    REQUIRES data_control button_driver)
    ```
-
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- USAGE EXAMPLES -->
-# Usage
+## Usage
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Quick Start
+### Quick Start
 This is intended to be a quick-guide, api documentation generated with doxygen can be found in the documentation directory of the master repo. 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-### Initializing Button Object
+#### Initializing Button Object
 To initialize a button object, first initialize and configure a button_conf_t struct with the desired settings, then pass it into the Button constructor.  
 
 The settings available within a button_conf_t struct:  
@@ -173,8 +177,9 @@ Example Initializations:
     //declare & initialize Button object
     Button my_button(button_conf);
 ```
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-### Button Events
+#### Button Events
 After being initialized, a Button object will automatically detect any user input and generate an event. 
 
 These events come in four flavors:
@@ -194,8 +199,9 @@ These events come in four flavors:
 4. **released:**   
    This event indicates the button has been released.
    This event is generated if the button is released any time after a long_press event has occurred. 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-### Handling Button Events
+#### Handling Button Events
 In order to be notified when a button-event has occurred, a call-back function (or multiple) can be registered with the button by calling the follow() method on its event member.  
 
 As many call-backs as desired can be registered to a button using follow(). When a button event occurs, any call-backs registered to the respective button will be called in the order they were registered— this means whichever call-back was registered first has highest priority.  
@@ -271,25 +277,27 @@ void my_callback(Button::ButtonEvent event)
   }
 }
 ```
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 
 
-
-## Examples
+### Examples
 Examples are available in the ButtonDriver directory of my esp_idf_cpp_examples repo:    
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 [https://github.com/myles-parfeniuk/esp_idf_cpp_examples](https://github.com/myles-parfeniuk/esp_idf_cpp_examples)
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Program Flowchart
+### Program Flowchart
 ![image](./documentation/readme_images/ButtonDriver_flow_chart.png)
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- LICENSE -->
-# License
+## License
 Distributed under the MIT License. See `LICENSE.md` for more information.
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- CONTACT -->
-# Contact
+## Contact
 Myles Parfeniuk - myles.parfenyuk@gmail.com
 Project Link: [https://github.com/myles-parfeniuk/button_driver](https://github.com/myles-parfeniuk/button_driver)
-
+<p align="right">(<a href="#readme-top">back to top</a>)</p>

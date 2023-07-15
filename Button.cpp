@@ -7,7 +7,13 @@
 bool Button::isr_service_installed = {false};
 
 Button::Button(button_config_t button_conf, bool logging_en, const char *name):
-event(Button::ButtonEvent::quick_press), button_conf(button_conf), logging_en(logging_en), pending_scan(false), name(name) 
+event(Button::ButtonEvent::quick_press), 
+button_conf(button_conf), 
+initialized(false), 
+logging_en(logging_en), 
+pending_scan(false), 
+name(name), 
+task(std::bind(&Button::button_task, this))
 {
     
     gpio_config_t gpio_conf;
@@ -96,9 +102,8 @@ event(Button::ButtonEvent::quick_press), button_conf(button_conf), logging_en(lo
 
         ESP_ERROR_CHECK(gpio_isr_handler_add(button_conf.gpio_num, button_handler, (void *)this)); //add button isr handler
 
-        initialized = false; //set initialized as false until task has been created, and suspended from within itself
-        xTaskCreate(&button_task_trampoline, "button_task", 2048, this, 4, &button_task_hdl);
-
+        task.set_stack_size(2048);
+        task.start_task(); 
         if(logging_en){
             ESP_LOGI(TAG, "ButtonName: %s| GPIO[%2d]| ActiveLow: %s| ActiveHi: %s| InternalPullUpDown: %s| LongPressEvtTime: %lld us| HeldEvtTime: %lld us", 
             name, (int16_t)button_conf.gpio_num, ((button_conf.active_lo)?"true":"false"), ((button_conf.active_hi)?"true":"false"), ((button_conf.pull_en)?"true":"false"),
@@ -140,18 +145,9 @@ bool Button::scan()
         }
 
         gpio_intr_enable(button_conf.gpio_num); //re-enable interrupts to resume task if button activity is detected
-        vTaskSuspend(NULL);  //self-suspend task until button activity is again detected via external interrupt 
+        task.suspend_task();  //self-suspend task until button activity is again detected via external interrupt 
     }
  }
-
- void Button::button_task_trampoline(void *arg)
- {
-    Button *local_button = (Button *)arg; //cast to button pointer
-
-    local_button->button_task(); //launch button task
-
- }
-
 
 bool Button::press_check()
 {
@@ -211,7 +207,7 @@ void Button::released_check()
                         
         }
 
-        vTaskDelay(15/portTICK_PERIOD_MS);
+        vTaskDelay(15/portTICK_PERIOD_MS); //delay for idle task
     }
 }
 
@@ -261,18 +257,10 @@ void Button::generate_released_evt()
 
 void IRAM_ATTR Button::button_handler(void *arg)
 {
-    BaseType_t xHigherPriorityTaskWoken = pdFALSE;
     Button *button = (Button *)arg;
-
     gpio_intr_disable(button->button_conf.gpio_num); //disable interrupt until re-enabled in button task
 
-    xHigherPriorityTaskWoken = xTaskResumeFromISR(button->button_task_hdl); //resume button task
-
-    if(xHigherPriorityTaskWoken == pdTRUE)
-    {
-        //Perform a context switch so this interrupt returns directly to the unblocked task
-        portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
-    }
+    button->task.resume_task_from_isr(); 
     
 }
 

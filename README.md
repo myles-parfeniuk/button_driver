@@ -51,11 +51,12 @@ Call-back functions can be registered to button objects and used to handle detec
    ```
 
 
-2. Cd into the components directory and clone both the ButtonDriver & DataControl repos.   
-   The ButtonDriver is dependent on DataControl and will not build without it.
+2. Cd into the components directory and clone both ButtonDriver, DataControl, & TaskWrapper repos.   
+   The ButtonDriver is dependent on DataControl and TaskWrapper and will not build without it.
 
    ```sh
    cd components
+   git clone https://github.com/myles-parfeniuk/task_wrapper.git
    git clone https://github.com/myles-parfeniuk/data_control.git
    git clone https://github.com/myles-parfeniuk/button_driver.git
    ```
@@ -67,7 +68,7 @@ Call-back functions can be registered to button objects and used to handle detec
    ```sh
    idf_component_register(SRC_DIRS "." 
    INCLUDE_DIRS "" 
-   REQUIRES data_control button_driver)
+   REQUIRES task_wrapper data_control button_driver)
    ```
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -76,7 +77,7 @@ Call-back functions can be registered to button objects and used to handle detec
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Quick Start
-This is intended to be a quick-guide, api documentation generated with doxygen can be found in the documentation directory of the master repo. 
+This is intended to be a quick-guide, api documentation generated with doxygen can be found in the documentation directory of the master branch. 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 #### Initializing Button Object

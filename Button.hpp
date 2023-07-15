@@ -1,12 +1,10 @@
 #pragma once
 
 #include "../data_control/DataControl.hpp"
+#include "../task_wrapper/TaskWrapper.hpp"
 
 //esp-idf includes
 #include "driver/gpio.h"
-#include "freertos/FreeRTOS.h"
-#include "freertos/queue.h"
-#include "freertos/task.h"
 #include "esp_log.h"
 #include "esp_err.h"
 
@@ -14,14 +12,13 @@
 #include <iostream>
 
 /**
-*
 * @brief Class representing push-button or tactile switch, has self-contained driver. 
 *
 * Contains information representing a button or tactile switch and methods to interact with it.
 * GPIO and ISR for button is set up from constructor when a button object is created.
 *
 * Call the follow() method on the event member of a button to register a call-back function (see data_control documentation for more info on follow()).
-* Call-back functions can be registered in as many locations or threads as desired using follow(), where each button event can be handled in multiple places,
+* Call-back functions can be registered in as many places as desired using follow(), where each button event can be handled in multiple places,
 * independently. 
 *
 * Any call-back functions registered to a button's event member will be executed every time a button event is detected.   
@@ -65,11 +62,11 @@ class Button {
   * - button_conf.active_lo is the opposite of button_conf.active_hi (button can only be active high or active low, not both). An active high button is one that
   * outputs a logic high when pressed, an active low button is one that outputs a logic low when pressed.
   * 
-  * -button_conf.gpio_num is correctly set with the gpio number that is connected to the button
+  * - button_conf.gpio_num is correctly set with the gpio number that is connected to the button
   * 
-  * -button_conf.long_press_evt_time is between 10000us and 5000000us
+  * - button_conf.long_press_evt_time is between 10000us and 5000000us
   * 
-  * -button_conf.held_evt_time is between 10000us and 5000000us
+  * - button_conf.held_evt_time is between 10000us and 5000000us
   * 
   * @param button_conf button configuration information, contains information about whether the button is active high or low, which GPIO number is connected to button, 
   *                    event generation times, and if internal pullups/pulldowns should be enabled.
@@ -107,6 +104,7 @@ class Button {
     bool logging_en; ///<true to enable debugging logs, false otherwise
     bool pending_scan;  ///< true if an event has been asserted since the last time scan() was called
     const char *name; ///<name of button, used in debugging logs
+    TaskWrapper<Button> task; ///< TaskWrapper that encapsulates the button_task
   
   /**
   * @brief Get level of a button, called from button task
@@ -199,18 +197,7 @@ class Button {
   */
   void button_task();
 
-  /**
-  * @brief Launches button task.
-  * 
-  * This function is used to get around the fact xTaskCreate() from the freertos api requires a static task function.
-  * To prevent having to write the button task from the context of a static function, this launches the button_task()
-  * from the Button object passed into xTaskCreate().
-  * 
-  * @param arg a pointer to the button to detect events for casted to a void pointer
-  * @return void, nothing to return
-  */
-  static void button_task_trampoline(void *arg);
-
+ 
   /**
   * @brief ISR handler responsible for handling button activity.
   * 
@@ -226,7 +213,6 @@ class Button {
   */
     static void IRAM_ATTR button_handler(void *arg);
 
-    xTaskHandle button_task_hdl; ///<task handle of button-task
     static const constexpr char* TAG = "Button"; ///<class tag, used in debug logs
     static bool isr_service_installed; ///<true of the isr service has been installed, false until first button is created
  

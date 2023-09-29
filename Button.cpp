@@ -49,7 +49,7 @@ task(std::bind(&Button::button_task, this))
     }
     else
     {
-        
+        ESP_LOGE(TAG, "Button not Initialized: Held press event time out of range, must be between 10000us to 5000000us");
         gpio_conf.pin_bit_mask = (0x1 << (uint16_t)button_conf.gpio_num); //assign button gpio number
         gpio_conf.mode = GPIO_MODE_INPUT; //set gpio mode as input
 

@@ -7,7 +7,7 @@
 bool Button::isr_service_installed = {false};
 
 Button::Button(button_config_t button_conf, bool logging_en, const char *name):
-event(Button::ButtonEvent::quick_press), 
+event(ButtonEvent::quick_press), 
 button_conf(button_conf), 
 initialized(false), 
 logging_en(logging_en), 

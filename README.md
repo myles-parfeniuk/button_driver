@@ -33,7 +33,7 @@
 <!-- ABOUT -->
 ## About
 
-ButtonDriver is a C++ based component written for esp-idf version 4.0, intended to simplify the use of push-buttons and tactile switches with the esp-32.  
+ButtonDriver is a C++ based component written for esp-idf version 5.1, intended to simplify the use of push-buttons and tactile switches with the esp-32.  
 It allows for the creation of Button objects which automatically detect user input from externally connected tactile switches or push-buttons.  
 Call-back functions can be registered to button objects and used to handle detected user input.   
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -59,16 +59,6 @@ Call-back functions can be registered to button objects and used to handle detec
    git clone https://github.com/myles-parfeniuk/task_wrapper.git
    git clone https://github.com/myles-parfeniuk/data_control.git
    git clone https://github.com/myles-parfeniuk/button_driver.git
-   ```
-
-
-3. You may have to edit project CMakeLists.txt file to include the components.  
-   
-   For example:  
-   ```sh
-   idf_component_register(SRC_DIRS "." 
-   INCLUDE_DIRS "" 
-   REQUIRES task_wrapper data_control button_driver)
    ```
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

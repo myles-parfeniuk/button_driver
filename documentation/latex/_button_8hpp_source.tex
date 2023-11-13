@@ -1,0 +1,80 @@
+\doxysection{Button.\+hpp}
+\label{_button_8hpp_source}\index{D:/development/git/button\_driver\_rework/components/button\_driver/Button.hpp@{D:/development/git/button\_driver\_rework/components/button\_driver/Button.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}../data\_control/DataControl.hpp"{}}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{comment}{//esp-\/idf\ includes}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}driver/gpio.h"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}esp\_log.h"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}esp\_err.h"{}}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{comment}{//standard\ library\ includes}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00027\ \textcolor{keyword}{class\ }Button\ \{\ \ \ \ \ \ \ }
+\DoxyCodeLine{00028\ \ \ \textcolor{keyword}{public}:\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keyword}{enum\ class}\ ButtonEvent\ }
+\DoxyCodeLine{00034\ \ \ \ \ \{}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ quick\_press,\ }
+\DoxyCodeLine{00036\ \ \ \ \ \ \ long\_press,\ }
+\DoxyCodeLine{00037\ \ \ \ \ \ \ held,\ }
+\DoxyCodeLine{00038\ \ \ \ \ \ \ released\ }
+\DoxyCodeLine{00039\ \ \ \ \ \};}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keyword}{struct\ }button\_config\_t\{}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ gpio\_num\_t\ gpio\_num;\ }
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ active\_lo;\ }
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ active\_hi;\ }
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ pull\_en;\ }
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ int64\_t\ long\_press\_evt\_time;\ }
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ int64\_t\ held\_evt\_time;\ }
+\DoxyCodeLine{00050\ \ \ \ \ \};\ }
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00075\ \ \ \ \ Button(button\_config\_t\ button\_conf,\ \textcolor{keywordtype}{bool}\ logging\_en\ =\ \textcolor{keyword}{false},\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *name\ =\ \textcolor{stringliteral}{"{}unamed"{}});}
+\DoxyCodeLine{00076\ \ \ }
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keywordtype}{bool}\ scan();\ }
+\DoxyCodeLine{00092\ \ \ \ \ }
+\DoxyCodeLine{00093\ \ \ \ \ DataControl::CallAlways<ButtonEvent>\ event;\ }
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00095\ \ \ \ \ TaskHandle\_t\ button\_task\_hdl;\ }
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00097\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00098\ \ \ }
+\DoxyCodeLine{00099\ \ \ \ \ button\_config\_t\ button\_conf;\ }
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keywordtype}{bool}\ logging\_en;\ }
+\DoxyCodeLine{00101\ \ \ \ \ \textcolor{keywordtype}{bool}\ pending\_scan;\ \ }
+\DoxyCodeLine{00102\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *name;\ }
+\DoxyCodeLine{00103\ \ \ }
+\DoxyCodeLine{00112\ \ \ \textcolor{keywordtype}{bool}\ get\_button\_level();\ }
+\DoxyCodeLine{00113\ \ \ }
+\DoxyCodeLine{00123\ \ \ \ \ \textcolor{keywordtype}{void}\ generate\_quick\_press\_evt();}
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00134\ \ \ \ \textcolor{keywordtype}{void}\ generate\_long\_press\_evt();}
+\DoxyCodeLine{00135\ }
+\DoxyCodeLine{00145\ \ \ \ \textcolor{keywordtype}{void}\ generate\_held\_evt();}
+\DoxyCodeLine{00146\ }
+\DoxyCodeLine{00156\ \ \ \ \textcolor{keywordtype}{void}\ generate\_released\_evt();}
+\DoxyCodeLine{00157\ \ \ \ }
+\DoxyCodeLine{00167\ \ \ \ \ \textcolor{keywordtype}{bool}\ press\_check();}
+\DoxyCodeLine{00168\ \ \ }
+\DoxyCodeLine{00178\ \ \ \textcolor{keywordtype}{void}\ released\_check();}
+\DoxyCodeLine{00179\ \ \ }
+\DoxyCodeLine{00193\ \ \ \textcolor{keywordtype}{void}\ button\_task();}
+\DoxyCodeLine{00194\ }
+\DoxyCodeLine{00195\ }
+\DoxyCodeLine{00207\ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ button\_task\_trampoline(\textcolor{keywordtype}{void}\ *arg);}
+\DoxyCodeLine{00208\ }
+\DoxyCodeLine{00209\ \ }
+\DoxyCodeLine{00224\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ IRAM\_ATTR\ button\_handler(\textcolor{keywordtype}{void}\ *arg);}
+\DoxyCodeLine{00225\ }
+\DoxyCodeLine{00226\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{char}*\ TAG\ =\ \textcolor{stringliteral}{"{}Button"{}};\ }
+\DoxyCodeLine{00227\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ isr\_service\_installed;\ }
+\DoxyCodeLine{00228\ \ }
+\DoxyCodeLine{00229\ \ \ \ }
+\DoxyCodeLine{00230\ \};}
+
+\end{DoxyCode}

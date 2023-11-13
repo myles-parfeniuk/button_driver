@@ -1,0 +1,329 @@
+\chapter{README}
+\label{md__d_1_2development_2git_2button__driver__rework_2components_2button__driver_2_r_e_a_d_m_e}\index{README@{README}}
+\label{md__d_1_2development_2git_2button__driver__rework_2components_2button__driver_2_r_e_a_d_m_e_readme-top}%
+ 
+
+
+
+{\bfseries{Table of Contents}}\begin{adjustwidth}{1em}{0em}
+
+\begin{DoxyEnumerate}
+\item {\texttt{ About}}  
+\item {\texttt{ Getting Started}} 
+\begin{DoxyItemize}
+\item {\texttt{ Adding to Project}} 
+\end{DoxyItemize}
+\item {\texttt{ Usage}} 
+\begin{DoxyItemize}
+\item {\texttt{ Quick Start}} 
+\begin{DoxyItemize}
+\item {\texttt{ Initializing Button Object}} 
+\item {\texttt{ Button Events}} 
+\item {\texttt{ Handling Button Events}} 
+\end{DoxyItemize}
+\item {\texttt{ Examples}} 
+\item {\texttt{ Program Flowchart}} 
+\end{DoxyItemize}
+\item {\texttt{ License}} 
+\item {\texttt{ Contact}} 
+\end{DoxyEnumerate}\end{adjustwidth}
+\doxysubsection{About}\label{md__d_1_2development_2git_2button__driver__rework_2components_2button__driver_2_r_e_a_d_m_e_autotoc_md0}
+Button\+Driver is a C++ based component written for esp-\/idf version 5.\+0+, intended to simplify the use of push-\/buttons and tactile switches.
+
+It allows for the creation of \doxyref{Button}{p.}{class_button} objects which automatically detect user input from externally connected tactile switches or push-\/buttons. ~\newline
+ Call-\/back functions can be registered to button objects to handle detected user input. ~\newline
+ 
+
+({\texttt{ back to top}})\doxysubsection{Getting Started}\label{md__d_1_2development_2git_2button__driver__rework_2components_2button__driver_2_r_e_a_d_m_e_autotoc_md1}
+({\texttt{ back to top}})\doxysubsubsection{Adding to Project}\label{md__d_1_2development_2git_2button__driver__rework_2components_2button__driver_2_r_e_a_d_m_e_autotoc_md2}
+
+\begin{DoxyEnumerate}
+\item Create a \"{}components\"{} directory in the root workspace directory of your esp-\/idf project if it does not exist already.
+
+In workspace directory\+: ~\newline
+ 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{mkdir\ components}
+
+\end{DoxyCode}
+
+\item Cd into the components directory and clone both the Button\+Driver, and Data\+Control repos. ~\newline
+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cd\ components}
+\DoxyCodeLine{git\ clone\ https://github.com/myles-\/parfeniuk/data\_control.git}
+\DoxyCodeLine{git\ clone\ https://github.com/myles-\/parfeniuk/button\_driver.git}
+
+\end{DoxyCode}
+ The Button\+Driver is dependent on Data\+Control and will not build without it. ~\newline
+
+\end{DoxyEnumerate}
+
+({\texttt{ back to top}})\doxysubsection{Usage}\label{md__d_1_2development_2git_2button__driver__rework_2components_2button__driver_2_r_e_a_d_m_e_autotoc_md3}
+({\texttt{ back to top}})\doxysubsubsection{Quick Start}\label{md__d_1_2development_2git_2button__driver__rework_2components_2button__driver_2_r_e_a_d_m_e_autotoc_md4}
+This is intended to be a quick-\/guide, api documentation generated with doxygen can be found in the documentation directory of the master branch. 
+
+({\texttt{ back to top}})\doxyparagraph{Initializing Button Object}\label{md__d_1_2development_2git_2button__driver__rework_2components_2button__driver_2_r_e_a_d_m_e_autotoc_md5}
+To initialize a button object, first initialize and configure a button\+\_\+conf\+\_\+t struct with the desired settings, then pass it into the \doxyref{Button}{p.}{class_button} constructor. ~\newline
+
+
+The settings available within a button\+\_\+conf\+\_\+t struct\+: ~\newline
+
+\begin{DoxyItemize}
+\item {\bfseries{gpio\+\_\+num}} — The GPIO number associated with the button, must not be initialized as GPIO\+\_\+\+NUM\+\_\+\+NC ~\newline
+
+\item {\bfseries{active\+\_\+lo}} — Set to true if the button is active low (falling edge trigger), cannot be true if active\+\_\+hi is also true ~\newline
+
+\item {\bfseries{active\+\_\+hi}} — Set to true if the button is active high (rising edge trigger), cannot be true if active\+\_\+lo is also true ~\newline
+
+\item {\bfseries{pull\+\_\+en}} — Set to true if internal pullup/pulldown resistor is enabled for button gpio pin, set to false if external resistors are used ~\newline
+
+\item {\bfseries{long\+\_\+press\+\_\+evt\+\_\+time}} — long-\/press event generation time in microseconds (us) if the button is held for longer than (long\+\_\+press\+\_\+evt\+\_\+time+25ms) a long-\/press event is generated, if it is released before (long\+\_\+press\+\_\+evt\+\_\+time+25ms) elapses, a quick-\/press event is generated instead suggested time of 300000us, must be between 10000us and 5000000us ~\newline
+
+\item {\bfseries{held\+\_\+event\+\_\+evt\+\_\+time}} — held event generation time in microseconds (us), if a long press event has already occurred and the button is still being held, held events will be generated every held\+\_\+evt\+\_\+time elapses, suggested time of 200000us, must be between 10000us and 5000000us
+\end{DoxyItemize}
+
+If the button\+\_\+conf\+\_\+t struct is not initialized correctly the \doxyref{Button}{p.}{class_button} constructor will output an error related to the issue in the terminal and dump a stack trace. ~\newline
+
+
+Example Initializations\+: ~\newline
+
+
+
+\begin{DoxyEnumerate}
+\item Active-\/\+Low w/ external pullup ~\newline
+
+\end{DoxyEnumerate}
+
+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{comment}{//initialize\ button\_config\_t\ struct}}
+\DoxyCodeLine{Button::button\_config\_t\ button\_conf\ =}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ .gpio\_num\ =\ GPIO\_NUM\_25,\ \textcolor{comment}{//gpio\ number\ connected\ to\ button,\ for\ ex.25}}
+\DoxyCodeLine{\ \ \ \ .active\_lo\ =\ \textcolor{keyword}{true},\ \textcolor{comment}{//active\ low}}
+\DoxyCodeLine{\ \ \ \ .active\_hi\ =\ \textcolor{keyword}{false},\ \textcolor{comment}{//not\ active\ high}}
+\DoxyCodeLine{\ \ \ \ .pull\_en\ =\ \textcolor{keyword}{false},\ \textcolor{comment}{//internal\ pullup\ disabled}}
+\DoxyCodeLine{\ \ \ \ .long\_press\_evt\_time\ =\ 300000,\ \textcolor{comment}{//300ms\ long-\/press\ event\ generation\ time}}
+\DoxyCodeLine{\ \ \ \ .held\_evt\_time\ =\ 200000,\ \textcolor{comment}{//200ms\ held\ event\ generation\ time}}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//declare\ \&\ initialize\ Button\ object}}
+\DoxyCodeLine{Button\ my\_button(button\_conf);}
+
+\end{DoxyCode}
+
+
+
+\begin{DoxyEnumerate}
+\item Active-\/\+Low w/ no external pullup
+\end{DoxyEnumerate}
+
+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{comment}{//initialize\ button\_config\_t\ struct}}
+\DoxyCodeLine{Button::button\_config\_t\ button\_conf\ =}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ .gpio\_num\ =\ GPIO\_NUM\_25,\ \textcolor{comment}{//gpio\ number\ connected\ to\ button,\ for\ ex.25}}
+\DoxyCodeLine{\ \ \ \ .active\_lo\ =\ \textcolor{keyword}{true},\ \textcolor{comment}{//active\ low}}
+\DoxyCodeLine{\ \ \ \ .active\_hi\ =\ \textcolor{keyword}{false},\ \textcolor{comment}{//not\ active\ high}}
+\DoxyCodeLine{\ \ \ \ .pull\_en\ =\ \textcolor{keyword}{true},\ \textcolor{comment}{//internal\ pullup\ enabled}}
+\DoxyCodeLine{\ \ \ \ .long\_press\_evt\_time\ =\ 300000,\ \textcolor{comment}{//300ms\ long-\/press\ event\ generation\ time}}
+\DoxyCodeLine{\ \ \ \ .held\_evt\_time\ =\ 200000,\ \textcolor{comment}{//200ms\ held\ event\ generation\ time}}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//declare\ \&\ initialize\ Button\ object}}
+\DoxyCodeLine{Button\ my\_button(button\_conf);}
+
+\end{DoxyCode}
+
+
+
+\begin{DoxyEnumerate}
+\item Active-\/\+High w/ external pulldown
+\end{DoxyEnumerate}
+
+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{comment}{//initialize\ button\_config\_t\ struct}}
+\DoxyCodeLine{Button::button\_config\_t\ button\_conf\ =}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ .gpio\_num\ =\ GPIO\_NUM\_25,\ \textcolor{comment}{//gpio\ number\ connected\ to\ button,\ for\ ex.25}}
+\DoxyCodeLine{\ \ \ \ .active\_lo\ =\ \textcolor{keyword}{false},\ \textcolor{comment}{//not\ active\ low}}
+\DoxyCodeLine{\ \ \ \ .active\_hi\ =\ \textcolor{keyword}{true},\ \textcolor{comment}{//active\ high}}
+\DoxyCodeLine{\ \ \ \ .pull\_en\ =\ \textcolor{keyword}{false},\ \textcolor{comment}{//internal\ pulldown\ disabled}}
+\DoxyCodeLine{\ \ \ \ .long\_press\_evt\_time\ =\ 300000,\ \textcolor{comment}{//300ms\ long-\/press\ event\ generation\ time}}
+\DoxyCodeLine{\ \ \ \ .held\_evt\_time\ =\ 200000,\ \textcolor{comment}{//200ms\ held\ event\ generation\ time}}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//declare\ \&\ initialize\ Button\ object}}
+\DoxyCodeLine{Button\ my\_button(button\_conf);}
+
+\end{DoxyCode}
+
+
+
+\begin{DoxyEnumerate}
+\item Active-\/\+High w/ no external pulldown
+\end{DoxyEnumerate}
+
+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{comment}{//initialize\ button\_config\_t\ struct}}
+\DoxyCodeLine{Button::button\_config\_t\ button\_conf\ =}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ .gpio\_num\ =\ GPIO\_NUM\_25,\ \textcolor{comment}{//gpio\ number\ connected\ to\ button,\ for\ ex.25}}
+\DoxyCodeLine{\ \ \ \ .active\_lo\ =\ \textcolor{keyword}{false},\ \textcolor{comment}{//not\ active\ low}}
+\DoxyCodeLine{\ \ \ \ .active\_hi\ =\ \textcolor{keyword}{true},\ \textcolor{comment}{//active\ high}}
+\DoxyCodeLine{\ \ \ \ .pull\_en\ =\ \textcolor{keyword}{true},\ \textcolor{comment}{//internal\ pulldown\ enabled}}
+\DoxyCodeLine{\ \ \ \ .long\_press\_evt\_time\ =\ 300000,\ \textcolor{comment}{//300ms\ long-\/press\ event\ generation\ time}}
+\DoxyCodeLine{\ \ \ \ .held\_evt\_time\ =\ 200000,\ \textcolor{comment}{//200ms\ held\ event\ generation\ time}}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//declare\ \&\ initialize\ Button\ object}}
+\DoxyCodeLine{Button\ my\_button(button\_conf);}
+
+\end{DoxyCode}
+ 
+
+({\texttt{ back to top}})\doxyparagraph{Button Events}\label{md__d_1_2development_2git_2button__driver__rework_2components_2button__driver_2_r_e_a_d_m_e_autotoc_md6}
+After being initialized, a \doxyref{Button}{p.}{class_button} object will automatically detect any user input and generate an event.
+
+These events come in 4 flavors\+:
+
+
+\begin{DoxyEnumerate}
+\item {\bfseries{quick-\/press\+:}} ~\newline
+ This event indicates the button was momentarily pressed. This event is generated when the push-\/button is pressed \& then released before (25ms + long\+\_\+press\+\_\+evt\+\_\+time) has elapsed.
+\item {\bfseries{long-\/press\+:}} ~\newline
+ This event indicates the button was pressed and held. This event is generated when the push-\/button is pressed \& not released after (25ms + long\+\_\+press\+\_\+evt\+\_\+time) has elapsed.
+\item {\bfseries{held\+:}} ~\newline
+ This event indicates a long-\/press event has already occurred, and the button is still being held. This event is generated every time held\+\_\+evt\+\_\+time elapses, after a long-\/press event, until the button is released.
+\item {\bfseries{released\+:}} ~\newline
+ This event indicates the button has been released. This event is generated if the button is released any time after a long\+\_\+press event has occurred. 
+\end{DoxyEnumerate}
+
+({\texttt{ back to top}})\doxyparagraph{Handling Button Events}\label{md__d_1_2development_2git_2button__driver__rework_2components_2button__driver_2_r_e_a_d_m_e_autotoc_md7}
+In order to be notified when a button-\/event has occurred, a call-\/back function (or multiple) can be registered with the button by calling the follow() method on its event member. ~\newline
+
+
+As many call-\/backs as desired can be registered to a button using follow(). When a button event occurs, any call-\/backs registered to the respective button will be called in the order they were registered— this means whichever call-\/back was registered first has highest priority. ~\newline
+
+
+It is recommended to initialize the call-\/back functions as lambda-\/functions for easy readability. ~\newline
+ Any call-\/back function registered with follow() must take the form\+: ~\newline
+ 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ call\_back\_example(Button::ButtonEvent\ event);}
+
+\end{DoxyCode}
+
+
+Example call-\/back functions \& registrations\+:
+
+
+\begin{DoxyEnumerate}
+\item Using a lambda call-\/back function\+:
+\end{DoxyEnumerate}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{comment}{//call\ the\ follow()\ method\ on\ a\ button\ event\ member\ to\ register\ a\ callback\ with\ a\ button}}
+\DoxyCodeLine{my\_button.event.follow(}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//lambda\ call-\/back\ function—\ called\ automatically\ when\ button\ input\ is\ detected}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ [](Button::ButtonEvent\ event)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//button\ event\ handler}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}(event)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ Button::ButtonEvent::quick\_press:}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//place\ code\ that\ should\ be\ run\ on\ quick-\/press\ here}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ Button::ButtonEvent::long\_press:}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//place\ code\ that\ should\ be\ run\ on\ long-\/press\ here}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ Button::ButtonEvent::held:}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//place\ code\ that\ should\ be\ run\ when\ button\ is\ held\ here}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ Button::ButtonEvent::released:}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//place\ code\ that\ should\ be\ run\ when\ button\ is\ released\ here}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \});}
+
+\end{DoxyCode}
+
+
+
+\begin{DoxyEnumerate}
+\item Using call-\/back function pointer\+:
+\end{DoxyEnumerate}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{comment}{//call-\/back\ prototype}}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ my\_callback(Button::ButtonEvent\ event);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//call\ the\ follow()\ method\ on\ a\ button\ event\ member\ to\ register\ a\ callback\ with\ a\ button}}
+\DoxyCodeLine{my\_button.event.follow(my\_callback);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//call-\/back\ function—\ called\ automatically\ when\ button\ input\ is\ detected}}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ my\_callback(Button::ButtonEvent\ event)}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ }
+\DoxyCodeLine{\ \ \textcolor{comment}{//button\ event\ handler}}
+\DoxyCodeLine{\ \ \textcolor{keywordflow}{switch}(event)}
+\DoxyCodeLine{\ \ \{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{case}\ Button::ButtonEvent::quick\_press:}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{comment}{//place\ code\ that\ should\ be\ run\ on\ quick-\/press\ here}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{case}\ Button::ButtonEvent::long\_press:}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{comment}{//place\ code\ that\ should\ be\ run\ on\ long-\/press\ here}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{case}\ Button::ButtonEvent::held:}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{comment}{//place\ code\ that\ should\ be\ run\ when\ button\ is\ held\ here}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{case}\ Button::ButtonEvent::released:}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{comment}{//place\ code\ that\ should\ be\ run\ when\ button\ is\ released\ here}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\ \ \}}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 
+
+({\texttt{ back to top}})\doxysubsubsection{Examples}\label{md__d_1_2development_2git_2button__driver__rework_2components_2button__driver_2_r_e_a_d_m_e_autotoc_md8}
+Examples are available in the Button\+Driver directory of my esp\+\_\+idf\+\_\+cpp\+\_\+examples repo\+: ~\newline
+ 
+
+({\texttt{ back to top}})
+
+{\texttt{ https\+://github.\+com/myles-\/parfeniuk/esp\+\_\+idf\+\_\+cpp\+\_\+examples}} 
+
+({\texttt{ back to top}})\doxysubsubsection{Program Flowchart}\label{md__d_1_2development_2git_2button__driver__rework_2components_2button__driver_2_r_e_a_d_m_e_autotoc_md9}
+ 
+
+({\texttt{ back to top}})\doxysubsection{License}\label{md__d_1_2development_2git_2button__driver__rework_2components_2button__driver_2_r_e_a_d_m_e_autotoc_md10}
+Distributed under the MIT License. See {\ttfamily LICENSE.\+md} for more information. 
+
+({\texttt{ back to top}})\doxysubsection{Contact}\label{md__d_1_2development_2git_2button__driver__rework_2components_2button__driver_2_r_e_a_d_m_e_autotoc_md11}
+Myles Parfeniuk -\/ {\texttt{ myles.\+parfenyuk@gmail.\+com}} ~\newline
+ Project Link\+: {\texttt{ https\+://github.\+com/myles-\/parfeniuk/button\+\_\+driver}} ~\newline
+ 
+
+({\texttt{ back to top}})

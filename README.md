@@ -290,6 +290,6 @@ Distributed under the MIT License. See `LICENSE.md` for more information.
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Contact
-Myles Parfeniuk - myles.parfenyuk@gmail.com
-Project Link: [https://github.com/myles-parfeniuk/button_driver](https://github.com/myles-parfeniuk/button_driver)
+Myles Parfeniuk - myles.parfenyuk@gmail.com  
+Project Link: [https://github.com/myles-parfeniuk/button_driver](https://github.com/myles-parfeniuk/button_driver)  
 <p align="right">(<a href="#readme-top">back to top</a>)</p>

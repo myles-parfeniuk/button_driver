@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../data_control/DataControl.hpp"
-#include "../task_wrapper/TaskWrapper.hpp"
 
 //esp-idf includes
 #include "driver/gpio.h"
@@ -14,15 +13,13 @@
 /**
 * @brief Class representing push-button or tactile switch, has self-contained driver. 
 *
-* Contains information representing a button or tactile switch and methods to interact with it.
-* GPIO and ISR for button is set up from constructor when a button object is created.
+* Encapsulates a physical button or tactile switch and methods to interact with it.
 *
 * Call the follow() method on the event member of a button to register a call-back function (see data_control documentation for more info on follow()).
+* 
+* Any call-back functions registered to a button's event member will be executed every time a button event is detected.   
 * Call-back functions can be registered in as many places as desired using follow(), where each button event can be handled in multiple places,
 * independently. 
-*
-* Any call-back functions registered to a button's event member will be executed every time a button event is detected.   
-* 
 *
 * @author Myles Parfeniuk
 *
@@ -31,7 +28,7 @@ class Button {
   public:             
 
     /** 
-    *   @brief  the different kinds of button events that can be detected
+    *   @brief  The different kinds of button events that can be detected.
     */
     enum class ButtonEvent 
     {
@@ -87,9 +84,7 @@ class Button {
   * It is not recommended to handle button events this way, scan() can only be called
   * in a single location (ie cannot be polled in two threads at once).
   *  
-  * Instead of calling scan(), call the follow() method on the event member of a button to register a call-back function.
-  * Call-back functions can be registered in as many locations or threads as desired, where each button event can be
-  * handled in multiple places, independently. 
+  * Instead of calling scan(), it is recommended call the follow() method on the event member to register a call-back function.
   * 
   * @return void, nothing to return
   */
@@ -97,14 +92,14 @@ class Button {
     
     DataControl::CallAlways<ButtonEvent> event; ///<DataWrapper containing button event, call-back function can be registered to button with follow() method (see data_control documentation) 
 
+    TaskHandle_t button_task_hdl; ///<task handle of the button_task
+
   private:
   
     button_config_t button_conf; ///<the button configuration settings 
-    bool initialized; ///<whether or not the task has been created and initially suspended
     bool logging_en; ///<true to enable debugging logs, false otherwise
     bool pending_scan;  ///< true if an event has been asserted since the last time scan() was called
     const char *name; ///<name of button, used in debugging logs
-    TaskWrapper<Button> task; ///< TaskWrapper that encapsulates the button_task
   
   /**
   * @brief Get level of a button, called from button task
@@ -183,30 +178,45 @@ class Button {
   void released_check();
   
   /**
-  * @brief Task responsible for detecting and generating events.
+  * @brief Task responsible for determining and generating events.
   * 
-  * This task is awoken by the button_handler isr when any button activity is detected. 
-  * It detects and generates events until the button is released.
-  * After the button is released the task suspends itself until it is again resumed from the button_handler isr.
+  * This task is notified by the button_handler ISR when any button activity is detected. 
+  * It determines the correct button events and generates them until the button is released.
+  * After the button is released the task waits until it is again notified by the button_handler ISR. 
   * 
-  * button activity triggers isr --> interrupt disabled --> button_task is resumed --> events are detected and generated --> 
-  * button release detected --> interrupt enabled --> button_task suspended
+  * button activity triggers isr --> interrupt disabled --> button_task notified --> events are determined and generated --> 
+  * button release detected --> interrupt enabled --> button_task waits for notification
   * 
   * @param button the button to detect and generate events for
   * @return void, nothing to return
   */
   void button_task();
 
+
+  /**
+  * @brief Launches button task.
+  * 
+  * This function is used to get around the fact xTaskCreate() from the freertos api requires a static task function.
+  * 
+  * To prevent having to write the button task from the context of a static function, this launches the button_task()
+  * from the Button object passed into xTaskCreate().
+  * 
+  * @param arg a pointer to the button to detect events for casted to a void pointer
+  * @return void, nothing to return
+  */
+  static void button_task_trampoline(void *arg);
+
  
   /**
   * @brief ISR handler responsible for handling button activity.
   * 
   * This ISR is entered when a falling edge is detected (for an active low button) or a rising edge (for an active high button).
-  * It resumes the button_task and disables the button's interrupt. Button interrupt will be re-enabled in button_task
-  * before it suspends itself, after a release event is detected.
+  * It resumes the button_task and disables the button's interrupt. 
   * 
-  * button activity triggers isr --> interrupt disabled --> button_task is resumed --> events are detected and generated --> 
-  * button release detected --> interrupt enabled -> button_task_suspended
+  * Button interrupt is re-enabled in button_task upon button release. 
+  * 
+  * button activity triggers isr --> interrupt disabled --> button_task notified --> events are determined and generated --> 
+  * button release detected --> interrupt enabled --> button_task waits for notification
   * 
   * @param button the button to resume button_task, and disable interrupt for
   * @return void, nothing to return

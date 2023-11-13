@@ -12,8 +12,7 @@ button_conf(button_conf),
 initialized(false), 
 logging_en(logging_en), 
 pending_scan(false), 
-name(name), 
-task(std::bind(&Button::button_task, this))
+name(name)
 {
     
     gpio_config_t gpio_conf;
@@ -101,8 +100,9 @@ task(std::bind(&Button::button_task, this))
 
         ESP_ERROR_CHECK(gpio_isr_handler_add(button_conf.gpio_num, button_handler, (void *)this)); //add button isr handler
 
-        task.set_stack_size(2048);
-        task.start_task(); 
+        button_task_hdl = NULL; 
+        xTaskCreate(&button_task_trampoline, "button_task", 2048, this, 4, &button_task_hdl);
+
         if(logging_en){
             ESP_LOGI(TAG, "ButtonName: %s| GPIO[%2d]| ActiveLow: %s| ActiveHi: %s| InternalPullUpDown: %s| LongPressEvtTime: %lld us| HeldEvtTime: %lld us", 
             name, (int16_t)button_conf.gpio_num, ((button_conf.active_lo)?"true":"false"), ((button_conf.active_hi)?"true":"false"), ((button_conf.pull_en)?"true":"false"),
@@ -129,23 +129,25 @@ bool Button::scan()
  void Button::button_task(void){
 
     while(1){
-        //if button has been initialized
-        if(initialized){
-                //when this statement is entered, the task has been awoken from the ISR meaning button activity was detected
 
-                vTaskDelay(25/portTICK_PERIOD_MS); //debounce press
+        ulTaskNotifyTake(pdTRUE, portMAX_DELAY); //block until notified by respective GPIO ISR
 
-                //check for press type, if button is not released (long press) then check for release event
-                if(!press_check())
-                    released_check();   
-        }
-        else{
-            initialized = true; //initialize button
-        }
+        vTaskDelay(25/portTICK_PERIOD_MS); //debounce press
+
+        //check for press type, if button is not released (long press) then check for release event
+        if(!press_check())
+            released_check();   
 
         gpio_intr_enable(button_conf.gpio_num); //re-enable interrupts to resume task if button activity is detected
-        task.suspend_task();  //self-suspend task until button activity is again detected via external interrupt 
     }
+ }
+
+void Button::button_task_trampoline(void *arg)
+ {
+    Button *local_button = (Button *)arg; //cast to button pointer
+
+    local_button->button_task(); //launch button task
+
  }
 
 bool Button::press_check()
@@ -256,10 +258,13 @@ void Button::generate_released_evt()
 
 void IRAM_ATTR Button::button_handler(void *arg)
 {
+     BaseType_t xHighPriorityTaskWoken = pdFALSE;
     Button *button = (Button *)arg;
     gpio_intr_disable(button->button_conf.gpio_num); //disable interrupt until re-enabled in button task
 
-    button->task.resume_task_from_isr(); 
+    vTaskNotifyGiveFromISR(button->button_task_hdl, &xHighPriorityTaskWoken); //notify button task button input was detected
+    portYIELD_FROM_ISR(xHighPriorityTaskWoken); //perform context switch if necessary
+    
     
 }
 

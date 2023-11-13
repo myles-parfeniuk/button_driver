@@ -33,9 +33,10 @@
 <!-- ABOUT -->
 ## About
 
-ButtonDriver is a C++ based component written for esp-idf version 5.1, intended to simplify the use of push-buttons and tactile switches with the esp-32.  
+ButtonDriver is a C++ based component written for esp-idf version 5.0+, intended to simplify the use of push-buttons and tactile switches.
+
 It allows for the creation of Button objects which automatically detect user input from externally connected tactile switches or push-buttons.  
-Call-back functions can be registered to button objects and used to handle detected user input.   
+Call-back functions can be registered to button objects to handle detected user input.   
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Getting Started
@@ -51,15 +52,15 @@ Call-back functions can be registered to button objects and used to handle detec
    ```
 
 
-2. Cd into the components directory and clone both ButtonDriver, DataControl, & TaskWrapper repos.   
-   The ButtonDriver is dependent on DataControl and TaskWrapper and will not build without it.
+2. Cd into the components directory and clone both the ButtonDriver, and DataControl repos.   
 
    ```sh
    cd components
-   git clone https://github.com/myles-parfeniuk/task_wrapper.git
    git clone https://github.com/myles-parfeniuk/data_control.git
    git clone https://github.com/myles-parfeniuk/button_driver.git
    ```
+   The ButtonDriver is dependent on DataControl and will not build without it.  
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- USAGE EXAMPLES -->
@@ -173,7 +174,7 @@ Example Initializations:
 #### Button Events
 After being initialized, a Button object will automatically detect any user input and generate an event. 
 
-These events come in four flavors:
+These events come in 4 flavors:
 
 1. **quick-press:**  
    This event indicates the button was momentarily pressed.

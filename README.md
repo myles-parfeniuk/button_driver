@@ -1,33 +1,31 @@
 <a name="readme-top"></a>
 ![image](./documentation/readme_images/ButtonDriver_banner.png)
 <!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about">About</a>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#adding-to-project">Adding to Project</a></li>
-      </ul>
-    </li>
-    <li><a href="#usage">Usage</a></li>
+<summary>Table of Contents</summary>
+<ol>
+  <li>
+    <a href="#about">About</a>
+  </li>
+  <li>
+    <a href="#getting-started">Getting Started</a>
     <ul>
-      <li><a href="#quick-start">Quick Start</a></li>
-      <ul>
-        <li><a href="#initializing-button-object">Initializing Button Object</a></li>
-        <li><a href="#button-events">Button Events</a></li>
-        <li><a href="#handling-button-events">Handling Button Events</a></li>
-      </ul>
-      <li><a href="#examples">Examples</a></li>
-      <li><a href="#program-flowchart">Program Flowchart</a></li>
+      <li><a href="#adding-to-project">Adding to Project</a></li>
     </ul>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ol>
-</details>
+  </li>
+  <li><a href="#usage">Usage</a></li>
+  <ul>
+    <li><a href="#quick-start">Quick Start</a></li>
+    <ul>
+      <li><a href="#initializing-button-object">Initializing Button Object</a></li>
+      <li><a href="#button-events">Button Events</a></li>
+      <li><a href="#handling-button-events">Handling Button Events</a></li>
+    </ul>
+    <li><a href="#examples">Examples</a></li>
+    <li><a href="#program-flowchart">Program Flowchart</a></li>
+  </ul>
+  <li><a href="#license">License</a></li>
+  <li><a href="#contact">Contact</a></li>
+</ol>
 
 
 <!-- ABOUT -->
@@ -60,6 +58,12 @@ Call-back functions can be registered to button objects to handle detected user 
    git clone https://github.com/myles-parfeniuk/button_driver.git
    ```
    The ButtonDriver is dependent on DataControl and will not build without it.  
+
+3. Ensure you clean your esp-idf project before rebuilding.  
+   Within esp-idf enabled terminal:
+   ```sh
+    idf.py fullclean
+   ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

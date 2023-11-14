@@ -106,7 +106,6 @@ class Button {
   * 
   * Get the current level of a button (whether the button is currently being pressed or is inactive).
   * 
-  * @param button the button to read the level of
   * @return true if button is currently being pressed, false if button inactive
   */
   bool get_button_level(); 
@@ -117,7 +116,6 @@ class Button {
   * Generates a quick-press event by calling set() method on this->event. 
   * This will execute any call-backs registered to the button and set pending_scan to true.
   * 
-  * @param button the button to generate a quick-press event for
   * @return void, nothing to return
   */
     void generate_quick_press_evt();
@@ -128,7 +126,6 @@ class Button {
   * Generates a long press event by calling set() method on this->event. 
   * This will execute any call-backs registered to the button and set pending_scan to true.
   * 
-  * @param button the button to generate a long-press event for
   * @return void, nothing to return
   */
    void generate_long_press_evt();
@@ -139,7 +136,6 @@ class Button {
   * Generates a held event by calling set() method on this->event. 
   * This will execute any call-backs registered to the button and set pending_scan to true.
   * 
-  * @param button the button to generate a held event for
   * @return void, nothing to return
   */
    void generate_held_evt();
@@ -150,7 +146,6 @@ class Button {
   * Generates a released event by calling set() method on this->event. 
   * This will execute any call-backs registered to the button and set pending_scan to true.
   * 
-  * @param button the button to generate a released event for
   * @return void, nothing to return
   */
    void generate_released_evt();
@@ -161,8 +156,7 @@ class Button {
   * Generates a quick-press event if button is released before (25ms + button->button_conf.long_press_evt_time) elapse.
   * Generates a long-press event otherwise. 
   * 
-  * @param button the button to detect press type for
-  * @return void, nothing to return
+  * @return True if button was released (quick-press event generated), false if button was held for until long_press_evt_time elapsed. 
   */
     bool press_check();
   
@@ -172,7 +166,6 @@ class Button {
   * Generates held events every button->button_conf.held_evt_time microseconds.
   * If the button is released a release event will be generated and the function will exit.
   * 
-  * @param button the button to detect release of and generate held events for
   * @return void, nothing to return
   */
   void released_check();
@@ -187,7 +180,6 @@ class Button {
   * button activity triggers isr --> interrupt disabled --> button_task notified --> events are determined and generated --> 
   * button release detected --> interrupt enabled --> button_task waits for notification
   * 
-  * @param button the button to detect and generate events for
   * @return void, nothing to return
   */
   void button_task();
@@ -218,7 +210,6 @@ class Button {
   * button activity triggers isr --> interrupt disabled --> button_task notified --> events are determined and generated --> 
   * button release detected --> interrupt enabled --> button_task waits for notification
   * 
-  * @param button the button to resume button_task, and disable interrupt for
   * @return void, nothing to return
   */
     static void IRAM_ATTR button_handler(void *arg);

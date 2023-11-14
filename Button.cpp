@@ -68,6 +68,7 @@ name(name)
                 gpio_conf.pull_up_en = GPIO_PULLUP_DISABLE;
                 gpio_conf.pull_down_en = GPIO_PULLDOWN_DISABLE; 
             }
+            
         }
         //if active low button
         else if (button_conf.active_lo)
